@@ -53,13 +53,10 @@ export default function universalMiddleware(request, response)
       // your "not found" component or route respectively, and send a 404 as
       // below, if you're using a catch-all route.
 
+      // saga server-side-rendering
+      // https://github.com/yelouafi/redux-saga/issues/13
+
       try{
-        const html = render(
-          <Provider store={store}>
-            <RouterContext {...renderProps} />
-          </Provider>,
-          store.getState()
-        )
         const preloaders = renderProps.components
           .filter((component) => component && component.preload)
           .map((component) => component.preload(renderProps.params, request))
@@ -70,6 +67,12 @@ export default function universalMiddleware(request, response)
           console.log('-------- initialState ------------')
           console.log(store.getState())
           console.log('-------- initialState ------------')
+          const html = render(
+            <Provider store={store}>
+              <RouterContext {...renderProps} />
+            </Provider>,
+            store.getState()
+          )
           response.status(200).send(html)
         })
       } catch(ex) {

@@ -1,5 +1,6 @@
 import { put, take } from 'redux-saga/effects'
 import { HELLO }  from './actions'
+import { push } from 'react-router-redux'
 
 // change count to see sagas hot-reload
 let count = 1
@@ -16,7 +17,12 @@ function* watchHello() {
   }
 }
 
+function* changeLocation() {
+  yield put(push('/about'))
+}
+
 export default [
   watchHello,
   hello,
+  changeLocation,
 ]
