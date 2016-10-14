@@ -57,7 +57,8 @@ export default function universalMiddleware(request, response)
         const html = render(
           <Provider store={store}>
             <RouterContext {...renderProps} />
-          </Provider>
+          </Provider>,
+          store.getState()
         )
         const preloaders = renderProps.components
           .filter((component) => component && component.preload)

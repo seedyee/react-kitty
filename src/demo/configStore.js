@@ -6,10 +6,13 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import createSagaMiddleware from 'redux-saga'
 import reducers from './reducers'
-import sagas from './sagas'
+import SagaManager from './sagas'
 
 const sagaMiddleware = createSagaMiddleware()
 const devtools = (typeof window !== 'undefined' && window.devToolsExtension) || (() => noop => noop)
+
+// hot relaod sagas
+// https://gist.github.com/hoschi/6538249ad079116840825e20c48f1690
 
 export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
@@ -33,14 +36,19 @@ export default function configureStore(initialState = {}, history) {
 
   // Create hook for async sagas
   store.runSaga = sagaMiddleware.run
-  sagas.forEach(store.runSaga)
 
-  // Make reducers hot reloadable, see http://mxs.is/googmo
-  /* istanbul ignore next */
+  // run sagas
+  SagaManager.startSagas(sagaMiddleware)
+
   if (module.hot) {
     module.hot.accept('./reducers', () => {
       const nextReducers = require('./reducers').default // eslint-disable-line global-require
       store.replaceReducer(nextReducers)
+    })
+
+    module.hot.accept('./sagas', () => {
+      SagaManager.cancelSagas(store)
+      require('./sagas').default.startSagas(sagaMiddleware)
     })
   }
 

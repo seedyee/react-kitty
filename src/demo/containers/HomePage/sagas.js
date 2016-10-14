@@ -1,5 +1,7 @@
 import { put, take } from 'redux-saga/effects'
 import { HELLO }  from './actions'
+
+// change count to see sagas hot-reload
 let count = 1
 
 function* hello() {
