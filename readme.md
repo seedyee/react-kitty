@@ -38,7 +38,10 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 - Extreme live development - hot reloading of client/server source with high level of error tolerance.
 - Express server with a basic security configuration using *hpp* and *helmet*.
 - *ReactJS* as the view layer.
+- Redux for state manage
+- Redux Saga for side effects manage
 - React Router as the router.
+- React Router redux - Ruthlessly simple bindings to keep react-router and redux in sync.
 - *React Helmet* allowing control of the page title/meta/styles/scripts from within your components. Direct control for your SEO needs.
 - CSS Support with CSS modules and additional flexible full PostCSS chain for advanced transformations e.g. autoprefixer
 - Fully integrated asset support for referencing files in CSS and JavaScript.
@@ -134,9 +137,3 @@ Deletes any build output that would have originated from the other commands.
 
 
 ## [License](license)
-
-## Copyright
-
-<img src="https://raw.githubusercontent.com/sebastian-software/s15e-javascript/master/assets/sebastiansoftware.png" alt="Sebastian Software GmbH Logo" width="250" height="200"/>
-
-Copyright 2016<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)
