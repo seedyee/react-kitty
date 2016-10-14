@@ -1,11 +1,13 @@
+import { HELLO }  from './actions'
+
 const initState = {
-  user: 'vimniky',
+  message: 'user',
 }
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case 'SWITCH_USER':
-      return { ...state, user: action.payload }
+    case HELLO:
+      return { ...state, message: action.payload }
     default:
       return state
   }

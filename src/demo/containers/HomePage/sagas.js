@@ -1,11 +1,20 @@
-import { put } from 'redux-saga/effects'
+import { put, take } from 'redux-saga/effects'
+import { HELLO }  from './actions'
+let count = 1
 
-let count = 0
+function* hello() {
+  yield put({ type: HELLO, payload: `Hello ${count++}` })
+  yield put({ type: HELLO, payload: `Hello ${count++}` })
+}
 
-function* switchUser() {
-  yield put({ type: 'SWITCH_USER', payload: `user ${count++}` })
+function* watchHello() {
+  while (true) {
+    const action = yield take(HELLO)
+    console.log(action.payload)
+  }
 }
 
 export default [
-  switchUser,
+  watchHello,
+  hello,
 ]
