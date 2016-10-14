@@ -2,7 +2,7 @@ import React from "react"
 import Markdown from "react-markdown"
 import Helmet from "react-helmet"
 
-import Button from "./Button"
+import Button from "../../components/Button"
 import Styles from "./About.css"
 
 const content = `

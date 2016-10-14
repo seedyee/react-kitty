@@ -7,7 +7,7 @@ import Helmet from "react-helmet"
 import { camelCase } from "lodash-es"
 import styles from "./App.css"
 
-const websiteDescription = "A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience."
+const websiteDescription = "A NodeJS V6 Universal React Redux Boilerplate with an Amazing Developer Experience."
 
 console.log("ES Modules Supported:", camelCase("hello-world") === "helloWorld")
 

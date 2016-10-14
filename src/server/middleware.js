@@ -3,11 +3,14 @@ import React from "react"
 import RouterContext from "react-router/lib/RouterContext"
 import createMemoryHistory from "react-router/lib/createMemoryHistory"
 import match from "react-router/lib/match"
-
+import { syncHistoryWithStore } from 'react-router-redux'
+import { Provider } from 'react-redux'
 import render from "./render"
 import routes from "../demo/routes"
 import { DISABLE_SSR } from "./config"
 import { IS_DEVELOPMENT } from "../common/config"
+import configureStore from '../demo/configStore'
+import { waitAll } from '../demo/sagas'
 
 /**
  * An express middleware that is capabable of doing React server side rendering.
@@ -27,7 +30,9 @@ export default function universalMiddleware(request, response)
     return
   }
 
-  const history = createMemoryHistory(request.originalUrl)
+  const memoryHistory = createMemoryHistory(request.originalUrl)
+  const store = configureStore({}, memoryHistory)
+  const history = syncHistoryWithStore(memoryHistory, store)
 
   // Server side handling of react-router.
   // Read more about this here:
@@ -49,8 +54,23 @@ export default function universalMiddleware(request, response)
       // below, if you're using a catch-all route.
 
       try{
-        const html = render(<RouterContext {...renderProps} />)
-        response.status(200).send(html)
+        const html = render(
+          <Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>
+        )
+        const preloaders = renderProps.components
+          .filter((component) => component && component.preload)
+          .map((component) => component.preload(renderProps.params, request))
+          .reduce((result, preloader) => result.concat(preloader), [])
+
+        // waitting for all async sagas tasks to finish
+        store.runSaga(waitAll(preloaders)).done.then(() => {
+          console.log('-------- initialState ------------')
+          console.log(store.getState())
+          console.log('-------- initialState ------------')
+          response.status(200).send(html)
+        })
       } catch(ex) {
         response.status(500).send(`Error during rendering: ${ex}!`)
       }
