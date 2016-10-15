@@ -6,8 +6,8 @@ import browserHistory from 'react-router/lib/browserHistory'
 import match from 'react-router/lib/match'
 import { Provider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
-import routes from '../demo/routes'
-import configureStore from '../demo/configStore'
+import routes from '../shared/routes'
+import configureStore from '../shared/configStore'
 
 
 import { IS_HOT_DEVELOPMENT } from '../common/config'
@@ -55,7 +55,7 @@ if (IS_HOT_DEVELOPMENT) {
   module.hot.accept('./index.js')
 
   // Any changes to our routes will cause a hotload re-render.
-  module.hot.accept('../demo/routes', renderApp)
+  module.hot.accept('../shared/routes', renderApp)
 }
 
 renderApp()

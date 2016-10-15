@@ -98,7 +98,7 @@ The application configuration is supported by the `dotenv` module and it require
 |  |- config // Central configuration files
 |  |- server // The server specific source
 |  |- client // The client specific source
-|  |- demo // Demo application
+|  |- shared // The shared source
 |  |- webpack // Build infrastructure
 |  |- scripts // Available scripts when installed via npm
 |

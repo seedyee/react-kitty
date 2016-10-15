@@ -6,11 +6,11 @@ import match from "react-router/lib/match"
 import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import render from "./render"
-import routes from "../demo/routes"
+import routes from "../shared/routes"
 import { DISABLE_SSR } from "./config"
 import { IS_DEVELOPMENT } from "../common/config"
-import configureStore from '../demo/configStore'
-import { waitAll } from '../demo/sagas'
+import configureStore from '../shared/configStore'
+import { waitAll } from '../shared/sagas'
 
 /**
  * An express middleware that is capabable of doing React server side rendering.
