@@ -1,14 +1,18 @@
 extends:
-  airbnb
+  - airbnb
+  - plugin:ava/recommended
 
 env:
   browser: true
   es6: true
   node: true
-
+plugins:
+  - ava
 parserOptions:
   ecmaFeatures:
     jsx: true
+
+root: true
 
 rules:
   no-console:
