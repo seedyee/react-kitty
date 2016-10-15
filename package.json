@@ -1,5 +1,5 @@
 {
-  "name": "advanced-boilerplate",
+  "name": "react-kitty",
   "version": "0.9.8",
   "description": "React Universally with PostCSS",
   "main": "lib/index.js",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sebastian-software/advanced-boilerplate.git"
+    "url": "git+https://github.com/seedyee/react-kitty"
   },
   "keywords": [
     "react",
@@ -38,12 +38,12 @@
     "postcss",
     "cssmodules"
   ],
-  "author": "Sebastian Software <s.werner@sebastian-software.de>",
+  "author": "seedyee",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sebastian-software/advanced-boilerplate/issues"
+    "url": "https://github.com/seedyee/react-kitty/issues"
   },
-  "homepage": "https://github.com/sebastian-software/advanced-boilerplate#readme",
+  "homepage": "https://github.com/seedyee/react-kitty#readme",
   "dependencies": {
     "assets-webpack-plugin": "^3.4.0",
     "async": "^2.1.1",
