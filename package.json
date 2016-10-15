@@ -18,7 +18,7 @@
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "nsp": "nsp check --output summary",
     "test": "ava \"app/**/*.test.js\" --verbose",
-    "cover": "nyc npm run test",
+    "coverage": "nyc npm run test",
     "watch:test": "npm run test -- --watch",
     "lint": "npm run lint:js",
     "lint:js": "eslint --ignore-path .eslintignore src",
@@ -53,6 +53,11 @@
       "lcov",
       "text",
       "html"
+    ]
+  },
+  "ava": {
+    "require": [
+      "./setup-test-env.js"
     ]
   },
   "dependencies": {
@@ -110,6 +115,7 @@
     "lost": "^7.1.0",
     "node-noop": "^1.0.0",
     "node-notifier": "^4.6.1",
+    "nyc": "8.3.1",
     "path": "^0.12.7",
     "pleeease-filters": "^3.0.0",
     "postcss": "^5.2.4",
@@ -169,6 +175,8 @@
     "webpack-sources": "^0.1.2"
   },
   "devDependencies": {
+    "babel-polyfill": "6.16.0",
+    "babel-register": "6.16.3",
     "normalize.css": "^5.0.0",
     "nsp": "^2.6.2",
     "prepublish-lib": "^0.4.1",
