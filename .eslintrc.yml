@@ -23,3 +23,5 @@ rules:
     - off
   no-process-env:
     - off
+ import/imports-first:
+   - off
