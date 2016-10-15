@@ -1,5 +1,5 @@
 extends:
-  ./node_modules/s15e-javascript/.eslintrc.yml
+  airbnb
 
 env:
   browser: true
@@ -12,6 +12,10 @@ parserOptions:
 
 rules:
   no-console:
+    - off
+  semi:
+    - off
+  react/jsx-filename-extension:
     - off
   no-process-env:
     - off
