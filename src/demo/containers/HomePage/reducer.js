@@ -1,4 +1,4 @@
-import { HELLO }  from './actions'
+import { HELLO } from './actions'
 
 const initState = {
   message: 'user',

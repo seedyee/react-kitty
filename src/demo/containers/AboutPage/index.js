@@ -1,9 +1,8 @@
-import React from "react"
-import Markdown from "react-markdown"
-import Helmet from "react-helmet"
+import React from 'react'
+import Markdown from 'react-markdown'
+import Helmet from 'react-helmet'
 
-import Button from "../../components/Button"
-import Styles from "./About.css"
+import Styles from './About.css'
 
 const content = `
 # Hello from Markdown
@@ -20,11 +19,9 @@ function About() {
     <article>
       <Helmet title="About" />
       <p className={Styles.intro}>
-        Produced with ❤️ by <a href="https://github.com/sebastiansoft">Sebastian Software</a>
-        <Button onClick={() => alert("clicked")}>Click me</Button>
-        <Button onClick={() => alert("clicked")} disabled>Can't click me</Button>
+        Produced with ❤️ by <a href="https://github.com/seedyee">seedyee</a>
       </p>
-      <Markdown source={content}></Markdown>
+      <Markdown source={content} />
     </article>
   )
 }

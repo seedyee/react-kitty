@@ -7,7 +7,7 @@
 // then it should go in the specific /src/server/config which will only be
 // contained in the server bundle.
 
-const isDevelopment = process.env.NODE_ENV === "development"
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 export const IS_DEVELOPMENT = isDevelopment
 

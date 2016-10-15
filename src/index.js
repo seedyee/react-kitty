@@ -1,4 +1,4 @@
-import * as ServerConfig from "./server/config"
-export { ServerConfig }
+import * as ServerConfig from './server/config'
 
-export { default as generateServer } from "./server/factory"
+export { default as generateServer } from './server/factory'
+export { ServerConfig }

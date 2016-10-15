@@ -1,7 +1,7 @@
-import "intl"
-import "isomorphic-fetch"
+import 'intl'
+import 'isomorphic-fetch'
 
-import "react"
-import "react-dom"
-import "react-router"
-import "react-intl"
+import 'react'
+import 'react-dom'
+import 'react-router'
+import 'react-intl'

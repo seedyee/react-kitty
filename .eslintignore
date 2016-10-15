@@ -2,4 +2,6 @@ build/*
 dist/*
 es5/*
 src/webpack/*
-
+src/server/*
+src/scripts/*
+src/config/*

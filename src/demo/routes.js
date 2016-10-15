@@ -1,24 +1,24 @@
-import React from "react"
-import Route from "react-router/lib/Route"
-import IndexRoute from "react-router/lib/IndexRoute"
+import React from 'react'
+import Route from 'react-router/lib/Route'
+import IndexRoute from 'react-router/lib/IndexRoute'
 
-import App from "./containers/App"
+import App from './containers/App'
 
 function handleError(err) {
   // TODO: Error handling, do we return an Error component here?
-  console.log("Error occurred loading dynamic route") // eslint-disable-line no-console
+  console.log('Error occurred loading dynamic route') // eslint-disable-line no-console
   console.log(err) // eslint-disable-line no-console
 }
 
 function resolveIndexComponent(nextState, cb) {
-  System.import("./containers/HomePage")
-    .then((module) => cb(null, module.default))
+  System.import('./containers/HomePage')
+    .then(module => cb(null, module.default))
     .catch(handleError)
 }
 
 function resolveAboutComponent(nextState, cb) {
-  System.import("./containers/AboutPage")
-    .then((module) => cb(null, module.default))
+  System.import('./containers/AboutPage')
+    .then(module => cb(null, module.default))
     .catch(handleError)
 }
 

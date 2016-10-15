@@ -48,7 +48,7 @@ export default function configureStore(initialState = {}, history) {
 
     module.hot.accept('./sagas', () => {
       SagaManager.cancelSagas(store)
-      require('./sagas').default.startSagas(sagaMiddleware)
+      require('./sagas').default.startSagas(sagaMiddleware) // eslint-disable-line global-require
     })
   }
 
