@@ -3,8 +3,8 @@
 // respective "process.env.*" variables below with the actual values.
 // These config values then become a part of the server bundle.
 
-import path from "path"
-import { fileExists } from "./guards"
+import path from 'path'
+import { fileExists } from './guards'
 
 const root = process.env.APP_ROOT
 
@@ -29,18 +29,18 @@ const assetsBundleFilePath = path.resolve(
 export const CLIENT_BUNDLE_MANIFEST_FILEPATH = path.resolve(
   root,
   CLIENT_BUNDLE_OUTPUT_PATH,
-  "manifest.json"
+  'manifest.json'
 )
 
 fileExists(
   assetsBundleFilePath,
   `We could not find the "${assetsBundleFilePath}" file, which contains a ` +
-  "list of the assets of the client bundle.  Please ensure that the client " +
-  "bundle has been built before the server bundle and that the required " +
-  "environment variables are configured (CLIENT_BUNDLE_OUTPUT_PATH & " +
-  "CLIENT_BUNDLE_ASSETS_FILENAME)"
+  'list of the assets of the client bundle.  Please ensure that the client ' +
+  'bundle has been built before the server bundle and that the required ' +
+  'environment variables are configured (CLIENT_BUNDLE_OUTPUT_PATH & ' +
+  'CLIENT_BUNDLE_ASSETS_FILENAME)'
 )
 
 export const CLIENT_BUNDLE_ASSETSJSON_FILEPATH = assetsBundleFilePath
 
-export const PUBLIC_DIR_PATH = path.resolve(root, "./public")
+export const PUBLIC_DIR_PATH = path.resolve(root, './public')

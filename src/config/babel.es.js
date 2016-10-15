@@ -1,5 +1,4 @@
-export default
-{
+export default {
   // Don't try to find .babelrc because we want to force this configuration.
   babelrc: false,
 
@@ -12,33 +11,31 @@ export default
   // Nobody needs the original comments when having source maps
   comments: false,
 
-  presets:
-  [
+  presets: [
     // let, const, destructuring, classes, no modules
-    [ "babel-preset-es2015", { modules: false } ],
+    ['babel-preset-es2015', { modules: false }],
 
     // exponentiation
-    "babel-preset-es2016",
+    'babel-preset-es2016',
 
     // async to generators + trailing function commas
-    "babel-preset-es2017",
+    'babel-preset-es2017',
 
     // JSX, Flow
-    "babel-preset-react"
+    'babel-preset-react',
   ],
 
-  plugins:
-  [
+  plugins: [
     // Optimization for lodash imports
-    "lodash",
+    'lodash',
 
     // class { handleClick = () => { } }
-    "transform-class-properties",
+    'transform-class-properties',
 
     // { ...todo, completed: true }
-    "transform-object-rest-spread",
+    'transform-object-rest-spread',
 
     // Polyfills the runtime needed
-    [ "transform-runtime" ]
-  ]
+    ['transform-runtime'],
+  ],
 }

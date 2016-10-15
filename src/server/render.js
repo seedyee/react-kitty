@@ -1,16 +1,18 @@
-import { renderToString } from "react-dom/server"
-import serialize from "serialize-javascript"
-import Helmet from "react-helmet"
-import { readFileSync } from "fs"
+ /* eslint-disable prefer-template */
+import { renderToString } from 'react-dom/server'
+import serialize from 'serialize-javascript'
+import Helmet from 'react-helmet'
+import { readFileSync } from 'fs'
 
-import assets from "./assets"
+import assets from './assets'
 
-import { CLIENT_BUNDLE_MANIFEST_FILEPATH } from "./config"
+import { CLIENT_BUNDLE_MANIFEST_FILEPATH } from './config'
 
-try{
-  var ClientManifest = readFileSync(CLIENT_BUNDLE_MANIFEST_FILEPATH, "utf8")
-} catch(ex) {
-  ClientManifest = "{}"
+let ClientManifest
+try {
+  ClientManifest = readFileSync(CLIENT_BUNDLE_MANIFEST_FILEPATH, 'utf8')
+} catch (ex) {
+  ClientManifest = '{}'
 }
 
 function styleTags(styles) {

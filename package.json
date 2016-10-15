@@ -18,7 +18,9 @@
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "nsp": "nsp check --output summary",
     "test": "ava \"app/**/*.test.js\" --verbose",
+    "cover": "nyc npm run test",
     "watch:test": "npm run test -- --watch",
+    "lint": "npm run lint:js",
     "lint:js": "eslint --ignore-path .eslintignore src",
     "prescript": "npm run clean && rollup --config rollup.script.cfg",
     "prepublish": "npm run prescript && rimraf lib && prepublish-lib",
@@ -46,6 +48,13 @@
     "url": "https://github.com/seedyee/react-kitty/issues"
   },
   "homepage": "https://github.com/seedyee/react-kitty#readme",
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text",
+      "html"
+    ]
+  },
   "dependencies": {
     "assets-webpack-plugin": "^3.4.0",
     "async": "^2.1.1",

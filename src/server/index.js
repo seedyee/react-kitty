@@ -1,11 +1,11 @@
-import universalReactAppMiddleware from "./middleware"
-import { SERVER_PORT } from "./config"
-import generateServer from "./factory"
+import universalReactAppMiddleware from './middleware'
+import { SERVER_PORT } from './config'
+import generateServer from './factory'
 
 const app = generateServer()
 
 // Bind our universal react app middleware as the handler for all get requests.
-app.get("*", universalReactAppMiddleware)
+app.get('*', universalReactAppMiddleware)
 
 // Create an http listener for our express app.
 const listener = app.listen(SERVER_PORT)
