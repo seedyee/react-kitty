@@ -1,15 +1,16 @@
 import React from 'react'
 import Helmet from 'react-helmet'
+import { connect } from 'react-redux'
+import { hello } from './actions'
 
-function Home() {
+function Home({ hello: sayHello }) {
   return (
     <article>
       <Helmet title="Home" />
-      <p>
+      <p onClick={sayHello}>
         Home Component
       </p>
     </article>
   )
 }
-
-export default Home
+export default connect(null, { hello })(Home)
