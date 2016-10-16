@@ -26,6 +26,7 @@ npm-debug.log
 
 # Cache file from ESLint
 .eslintcache
+.\#*
 
 .nyc_output
 coverage
