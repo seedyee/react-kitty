@@ -1,4 +1,5 @@
 import React from 'react'
+import { renderToString } from 'react-dom/server';
 import RouterContext from 'react-router/lib/RouterContext'
 import createMemoryHistory from 'react-router/lib/createMemoryHistory'
 import match from 'react-router/lib/match'
@@ -9,7 +10,8 @@ import routes from '../shared/routes'
 import { DISABLE_SSR } from './config'
 import { IS_DEVELOPMENT } from '../common/config'
 import configureStore from '../shared/configStore'
-import { waitAll } from '../shared/sagas'
+import rootSagas from '../shared/sagas'
+
 
 /**
  * An express middleware that is capabable of doing React server side rendering.
@@ -48,21 +50,24 @@ export default function universalMiddleware(request, response) {
       // https://github.com/yelouafi/redux-saga/issues/13
 
       try {
-        const preloaders = renderProps.components
-          .filter(component => component && component.preload)
-          .map(component => component.preload(renderProps.params, request))
-          .reduce((result, preloader) => result.concat(preloader), [])
-
-        // waitting for all async sagas tasks to finish
-        store.runSaga(waitAll(preloaders)).done.then(() => {
+        const rootComponent = (
+          <Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>
+        )
+        const tasks = rootSagas.map(saga => store.runSaga(saga).done)
+        Promise.all(tasks).then(() => {
           const html = render(
-            <Provider store={store}>
-              <RouterContext {...renderProps} />
-            </Provider>,
+            rootComponent,
             store.getState()
           )
           response.status(200).send(html)
         })
+        // Trigger sagas for component to run
+        // https://github.com/yelouafi/redux-saga/issues/255#issuecomment-210275959
+        renderToString(rootComponent)
+        // Dispatch a close event so sagas stop listening after they're resolved
+        store.close()
       } catch (ex) {
         response.status(500).send(`Error during rendering: ${ex}!`)
       }

@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
 import routes from '../shared/routes'
 import configureStore from '../shared/configStore'
-
+import rootSagas from '../shared/sagas'
 
 import { IS_HOT_DEVELOPMENT } from '../common/config'
 
@@ -18,6 +18,8 @@ const initialState = window.APP_STATE || {} // eslint-disable-line
 const store = configureStore(initialState, browserHistory)
 const history = syncHistoryWithStore(browserHistory, store)
 
+// start rootSagas on client
+rootSagas.forEach(store.runSaga)
 function routerError(error) {
   // TODO: Error handling.
   console.error('React Router match failed.') // eslint-disable-line no-console
