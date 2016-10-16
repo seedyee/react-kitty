@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
+import { fromJS } from 'immutable'
 import createSagaMiddleware, { END } from 'redux-saga'
 import reducers from './reducers'
 import { SagaManager } from './sagas'
@@ -26,7 +27,7 @@ export default function configureStore(initialState = {}, history) {
 
   const store = createStore(
     reducers,
-    initialState,
+    fromJS(initialState),
     compose(...enhancers)
   )
 
@@ -49,8 +50,5 @@ export default function configureStore(initialState = {}, history) {
       require('./sagas').default.startSagas(sagaMiddleware) // eslint-disable-line global-require
     })
   }
-
-  // Initialize it with no other reducers
-  store.asyncReducers = {}
   return store
 }

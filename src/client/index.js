@@ -11,12 +11,15 @@ import configureStore from '../shared/configStore'
 import rootSagas from '../shared/sagas'
 
 import { IS_HOT_DEVELOPMENT } from '../common/config'
+import { selectLocationState } from '../shared/selectors'
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector('#app')
 const initialState = window.APP_STATE || {} // eslint-disable-line
 const store = configureStore(initialState, browserHistory)
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(browserHistory, store, {
+  selectLocationState: selectLocationState(),
+})
 
 // start rootSagas on client
 rootSagas.forEach(store.runSaga)

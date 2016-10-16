@@ -5,13 +5,14 @@ import createMemoryHistory from 'react-router/lib/createMemoryHistory'
 import match from 'react-router/lib/match'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
+
 import render from './render'
 import routes from '../shared/routes'
 import { DISABLE_SSR } from './config'
 import { IS_DEVELOPMENT } from '../common/config'
 import configureStore from '../shared/configStore'
 import rootSagas from '../shared/sagas'
-
+import { selectLocationState } from '../shared/selectors'
 
 /**
  * An express middleware that is capabable of doing React server side rendering.
@@ -31,7 +32,9 @@ export default function universalMiddleware(request, response) {
 
   const memoryHistory = createMemoryHistory(request.originalUrl)
   const store = configureStore({}, memoryHistory)
-  const history = syncHistoryWithStore(memoryHistory, store)
+  const history = syncHistoryWithStore(memoryHistory, store, {
+    selectLocationState: selectLocationState(),
+  })
 
   // Server side handling of react-router.
   // Read more about this here:
