@@ -61,7 +61,7 @@ export default function universalMiddleware(request, response) {
         store.runSaga(rootSaga).done.then(() => {
           const html = render(
             rootComponent,
-            store.getState()
+            store.getState().toJS()
           )
           response.status(200).send(html)
         })
