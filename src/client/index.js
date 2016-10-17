@@ -60,7 +60,7 @@ if (IS_HOT_DEVELOPMENT) {
   module.hot.accept('./index.js')
 
   // Any changes to our routes will cause a hotload re-render.
-  module.hot.accept('../shared/routes', renderApp)
+  module.hot.accept('../shared/createRoutes', renderApp)
 }
 
 renderApp()
