@@ -3,7 +3,6 @@ import { routerMiddleware } from 'react-router-redux'
 import { fromJS } from 'immutable'
 import createSagaMiddleware, { END } from 'redux-saga'
 import reducers from './reducers'
-import { SagaManager } from './sagas'
 
 const sagaMiddleware = createSagaMiddleware()
 const devtools = (typeof window !== 'undefined' && window.devToolsExtension) || (() => noop => noop)
@@ -34,20 +33,11 @@ export default function configureStore(initialState = {}, history) {
   // Create hook for async sagas
   store.runSaga = sagaMiddleware.run
   store.close = () => store.dispatch(END)
-  store.startSagas = () => SagaManager.startSagas(sagaMiddleware)
-
-  // run sagas
-  /* SagaManager.startSagas(sagaMiddleware)*/
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
       const nextReducers = require('./reducers').default // eslint-disable-line global-require
       store.replaceReducer(nextReducers)
-    })
-
-    module.hot.accept('./sagas', () => {
-      SagaManager.cancelSagas(store)
-      require('./sagas').default.startSagas(sagaMiddleware) // eslint-disable-line global-require
     })
   }
   return store

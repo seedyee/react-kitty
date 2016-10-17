@@ -1,8 +1,8 @@
-import { put, take } from 'redux-saga/effects'
+import { put, take, fork } from 'redux-saga/effects'
 
 import { HELLO } from './actions'
 // change count to see sagas hot-reload
-let count = 2
+let count = 1
 
 function* hello() {
   yield put({ type: HELLO, payload: `Hello ${count += 1}` })
@@ -16,7 +16,9 @@ function* watchHello() {
   }
 }
 
-export default [
-  watchHello,
-  hello,
-]
+export default function* homeSaga() {
+  yield [
+    fork(watchHello),
+    fork(hello),
+  ]
+}

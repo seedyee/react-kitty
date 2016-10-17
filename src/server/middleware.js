@@ -11,7 +11,7 @@ import createRoutes from '../shared/routes'
 import { DISABLE_SSR } from './config'
 import { IS_DEVELOPMENT } from '../common/config'
 import configureStore from '../shared/configStore'
-import rootSagas from '../shared/sagas'
+import rootSaga from '../shared/rootSaga'
 import { selectLocationState } from '../shared/selectors'
 
 /**
@@ -58,8 +58,7 @@ export default function universalMiddleware(request, response) {
             <RouterContext {...renderProps} />
           </Provider>
         )
-        const tasks = rootSagas.map(saga => store.runSaga(saga).done)
-        Promise.all(tasks).then(() => {
+        store.runSaga(rootSaga).done.then(() => {
           const html = render(
             rootComponent,
             store.getState()
