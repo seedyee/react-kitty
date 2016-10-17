@@ -7,7 +7,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
 
 import render from './render'
-import createRoutes from '../shared/routes'
+import createRoutes from '../shared/createRoutes'
 import { DISABLE_SSR } from './config'
 import { IS_DEVELOPMENT } from '../common/config'
 import configureStore from '../shared/configStore'

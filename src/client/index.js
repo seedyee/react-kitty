@@ -6,7 +6,7 @@ import browserHistory from 'react-router/lib/browserHistory'
 import match from 'react-router/lib/match'
 import { Provider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
-import createRoutes from '../shared/routes'
+import createRoutes from '../shared/createRoutes'
 import configureStore from '../shared/configStore'
 import rootSaga from '../shared/rootSaga'
 
