@@ -7,7 +7,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
 
 import render from './render'
-import routes from '../shared/routes'
+import createRoutes from '../shared/routes'
 import { DISABLE_SSR } from './config'
 import { IS_DEVELOPMENT } from '../common/config'
 import configureStore from '../shared/configStore'
@@ -39,7 +39,7 @@ export default function universalMiddleware(request, response) {
   // Server side handling of react-router.
   // Read more about this here:
   // https://github.com/reactjs/react-router/blob/master/docs/guides/ServerRendering.md
-  match({ routes, history }, (error, redirectLocation, renderProps) => {
+  match({ routes: createRoutes(store), history }, (error, redirectLocation, renderProps) => {
     if (error) {
       response.status(500).send(error.message)
     } else if (redirectLocation) {
