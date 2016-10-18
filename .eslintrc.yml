@@ -55,4 +55,10 @@ rules:
     - off
   no-constant-condition:
     - off
+  class-methods-use-this:
+    - off
+  react/prop-types:
+    - off
+  arrow-parens:
+    - off
       
