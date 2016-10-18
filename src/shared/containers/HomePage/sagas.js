@@ -1,7 +1,6 @@
 import { put, take, fork } from 'redux-saga/effects'
 
 import { HELLO } from './actions'
-// change count to see sagas hot-reload
 let count = 1
 
 function* hello() {
@@ -10,7 +9,7 @@ function* hello() {
 }
 
 function* watchHello() {
-  while (true) { // eslint-disable-line no-constant-condition
+  while (true) {
     const action = yield take(HELLO)
     console.log(action.payload)
   }
