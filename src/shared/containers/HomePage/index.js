@@ -1,16 +1,28 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
-import { hello } from './actions'
+import Markdown from 'react-markdown'
+import Styles from './Home.css'
 
-function Home({ hello: sayHello }) {
+const content = `
+# Hello from Markdown
+
+This is a paragraph rendered using Markdown.
+
+* First Argument
+* Second Argument
+* Third Argument
+`
+
+function Home() {
   return (
-    <article>
+    <div>
       <Helmet title="Home" />
-      <p onClick={sayHello}>
-        Home Component
+      <p className={Styles.intro}>
+        Produced with ❤️ by <a href="https://github.com/seedyee">seedyee</a>
       </p>
-    </article>
+      <Markdown source={content} />
+    </div>
   )
 }
-export default connect(null, { hello })(Home)
+export default connect()(Home)

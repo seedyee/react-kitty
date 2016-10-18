@@ -3,7 +3,7 @@ import React from 'react'
 class LoginPage extends React.Component {
   render() {
     return (
-      <div>login</div>
+      <div>Login Page</div>
     )
   }
 }

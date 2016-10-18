@@ -1,0 +1,12 @@
+.Nav {
+  ul {
+    font-size: 20px;
+    list-style: none;
+    display: flex;
+    color: blue;
+    li {
+      cursor: pointer;
+      margin: 20px;
+    }
+  }
+}

@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
-import Link from 'react-router/lib/Link'
 import Helmet from 'react-helmet'
 import { camelCase } from 'lodash-es'
-import 'normalize.css/normalize.css' // eslint-disable-line
+import 'normalize.css/normalize.css'
 import './Fonts.css'
+import Nav from '../Nav'
 
 const websiteDescription = 'A NodeJS V6 Universal React Redux Boilerplate with an Amazing Developer Experience.'
 
@@ -14,23 +14,13 @@ function App({ children }) {
     <main>
       <Helmet
         htmlAttributes={{ lang: 'en' }}
-        titleTemplate="Advanced Boilerplate - %s"
-        defaultTitle="Advanced Boilerplate"
+        titleTemplate="react-kitty - %s"
+        defaultTitle="react-kitty"
         meta={[
           { name: 'description', content: websiteDescription },
         ]}
       />
-
-      <div>
-        <h1>Advanced Boilerplate</h1>
-        <strong>{websiteDescription}</strong>
-      </div>
-      <div>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-        </ul>
-      </div>
+      <Nav />
       <div>
         {children}
       </div>

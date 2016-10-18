@@ -3,9 +3,8 @@ import React from 'react'
 class DashboardPage extends React.Component {
   render() {
     return (
-      <div>dashboard</div>
+      <div>Dashboard Page</div>
     )
   }
 }
-
 export default DashboardPage

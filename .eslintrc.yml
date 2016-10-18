@@ -51,3 +51,5 @@ rules:
     - error
   max-len:
     - off
+  react/prefer-stateless-function:
+    - off
