@@ -6,11 +6,8 @@
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { fromJS } from 'immutable'
 import { combineReducers } from 'redux-immutable'
-import { reducer as formReducer } from 'redux-form'
+import { reducer as formReducer } from 'redux-form/immutable'
 
-/* import homeReducer from './containers/HomePage/reducer'
- * import aboutReducer from './containers/AboutPage/reducer'
- * */
 const routeInitialState = fromJS({
   locationBeforeTransitions: null,
 })
@@ -31,6 +28,4 @@ function routeReducer(state = routeInitialState, action) {
 export default combineReducers({
   routing: routeReducer,
   form: formReducer,
-  /* homeReducer,*/
-  /* aboutReducer,*/
 })
