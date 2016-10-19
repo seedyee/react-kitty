@@ -23,13 +23,13 @@ function resolveAboutPage(nextState, cb) {
 }
 
 function resolveLoginPage(nextState, cb) {
-  System.import('./containers/LoginPage')
+  System.import('./containers/Auth/LoginPage')
     .then(module => cb(null, module.default))
     .catch(handleError)
 }
 
 function resolveRegisterPage(nextState, cb) {
-  System.import('./containers/RegisterPage')
+  System.import('./containers/Auth/RegisterPage')
     .then(module => cb(null, module.default))
     .catch(handleError)
 }
@@ -45,7 +45,7 @@ function resolveNotFoundPage(nextState, cb) {
         .catch(handleError)
 }
 
-const routes = store => (
+const routes = store => ( // eslint-disable-line no-unused-vars
   <Route path="/" component={App}>
     <IndexRoute getComponent={resolveIndexPage} />
     <Route path="about" getComponent={resolveAboutPage} />

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import Styles from './Nav.css'
+import { logoutRequest } from '../Auth/actions'
 
 class Nav extends React.Component {
   render() {
@@ -13,6 +14,7 @@ class Nav extends React.Component {
           <li onClick={() => this.props.push('/login')}>Login</li>
           <li onClick={() => this.props.push('/register')}>Register</li>
           <li onClick={() => this.props.push('/dashboard')}>Dashboard</li>
+          <li onClick={() => this.props.logoutRequest()}>Logout</li>
         </ul>
       </div>
     )
@@ -21,6 +23,8 @@ class Nav extends React.Component {
 
 Nav.propTypes = {
   push: React.PropTypes.func,
+  logoutRequest: React.PropTypes.func,
 }
 
-export default connect(null, { push })(Nav)
+export default connect(null, { push, logoutRequest })(Nav)
+

@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 import { connect } from 'react-redux'
-import validate from './validate'
-import { loginActionTypes } from './actions'
-import { onSubmitActions } from '../../utils/reduxFormSubmitSaga'
+import validate from '../validate'
+import { loginActionTypes } from '../actions'
+import { onSubmitActions } from '../../../utils/reduxFormSubmitSaga'
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
   <div>
