@@ -1,5 +1,5 @@
 import atImport from "postcss-smart-import"
-import url from "postcss-url"
+import simpleUrl from "postcss-simple-url"
 import discardComments from "postcss-discard-comments"
 import advancedVariables from "postcss-advanced-variables"
 import sassyMixins from "postcss-sassy-mixins"
@@ -20,12 +20,12 @@ import selectorMatches from "postcss-selector-matches"
 import pseudoelements from "postcss-pseudoelements"
 import autoprefixer from "autoprefixer"
 import reporter from "postcss-reporter"
-
 import hexrgba from "postcss-hexrgba"
 import zindex from "postcss-zindex"
 import warn from "postcss-at-warn"
 import responsiveType from "postcss-responsive-type"
 import inputStyles from "postcss-input-style"
+import assets from "postcss-assets"
 
 const autoprefixerSettings =
 {
@@ -47,7 +47,8 @@ export default function getConfig(bundler, variables = {})
       addDependencyTo: bundler
     }),
 
-    url(),
+    simpleUrl(),
+    assets(),
 
     // Discard comments in your CSS files with PostCSS.
     // https://github.com/ben-eb/postcss-discard-comments
@@ -161,7 +162,10 @@ export default function getConfig(bundler, variables = {})
 
     // Log PostCSS messages to the console
     reporter({
-      clearMessages: true
+      clearMessages: true,
+      filter: function(message) {
+        return message.type !== "dependency"
+      }
     })
   ]
 }
