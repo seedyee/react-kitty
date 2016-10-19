@@ -14,7 +14,7 @@ const submitForm = (payload, actions, resolve, reject) => ({
 
 export const onSubmitActions = (actions, valuesTransform = identity) =>
   (values, dispatch) => new Promise((resolve, reject) => {
-    dispatch(submitForm(valuesTransform(values), actions, resolve, reject))
+    dispatch(submitForm(valuesTransform(values.toJS()), actions, resolve, reject))
   })
 
 export default function* reduxFormSubmitSaga() {

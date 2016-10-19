@@ -47,7 +47,7 @@ const comp = reduxForm({
   onSubmit: onSubmitActions(loginActionTypes),
 })(LoginForm)
 const initialValues = {
-  email: 'vimniky@gmail.com',
+  email: 'vimniky@mail.com',
 }
 
 export default connect(() => ({
