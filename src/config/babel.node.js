@@ -30,7 +30,7 @@ export default {
     // transform-object-rest-spread' support (which always must be transpiled)
     'transform-es2015-spread',
     'transform-es2015-destructuring',
-
+    'transform-es2015-parameters',
     // class { handleClick = () => { } }
     'transform-class-properties',
 
