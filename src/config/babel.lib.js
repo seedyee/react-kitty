@@ -36,6 +36,6 @@ export default {
     'transform-object-rest-spread',
 
     // Polyfills the runtime needed
-    ['transform-runtime', { regenerator: false }],
+    ['transform-runtime'],
   ],
 }
