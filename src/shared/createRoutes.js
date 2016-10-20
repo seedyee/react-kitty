@@ -2,7 +2,7 @@ import React from 'react'
 import Route from 'react-router/lib/Route'
 import IndexRoute from 'react-router/lib/IndexRoute'
 
-import App from './containers/App'
+import App from './modules/App'
 
 function handleError(err) {
   // TODO: Error handling, do we return an Error component here?
@@ -11,37 +11,37 @@ function handleError(err) {
 }
 
 function resolveIndexPage(nextState, cb) {
-  System.import('./containers/HomePage')
+  System.import('./modules/HomePage')
     .then(module => cb(null, module.default))
     .catch(handleError)
 }
 
 function resolveAboutPage(nextState, cb) {
-  System.import('./containers/AboutPage')
+  System.import('./modules/AboutPage')
     .then(module => cb(null, module.default))
     .catch(handleError)
 }
 
 function resolveLoginPage(nextState, cb) {
-  System.import('./containers/Auth/LoginPage')
+  System.import('./modules/Auth/LoginPage')
     .then(module => cb(null, module.default))
     .catch(handleError)
 }
 
 function resolveRegisterPage(nextState, cb) {
-  System.import('./containers/Auth/RegisterPage')
+  System.import('./modules/Auth/RegisterPage')
     .then(module => cb(null, module.default))
     .catch(handleError)
 }
 
 function resolveDashboardPage(nextState, cb) {
-  System.import('./containers/DashboardPage')
+  System.import('./modules/DashboardPage')
         .then(module => cb(null, module.default))
         .catch(handleError)
 }
 
 function resolveNotFoundPage(nextState, cb) {
-  System.import('./containers/NotFoundPage')
+  System.import('./modules/NotFoundPage')
         .then(module => cb(null, module.default))
         .catch(handleError)
 }

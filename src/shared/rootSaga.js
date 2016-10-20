@@ -2,7 +2,7 @@ import { fork, cancel, take } from 'redux-saga/effects'
 
 import reduxFormSubmitSaga from './utils/reduxFormSubmitSaga'
 /* import homeSaga from './containers/HomePage/sagas'*/
-import authSaga from './containers/Auth/sagas'
+import authSaga from './modules/Auth/sagas'
 
 export function* rootSaga() {
   yield [

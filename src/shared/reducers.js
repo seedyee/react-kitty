@@ -7,7 +7,7 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 import { fromJS } from 'immutable'
 import { combineReducers } from 'redux-immutable'
 import { reducer as formReducer } from 'redux-form/immutable'
-import authReducer from './containers/Auth/reducers'
+import authReducer from './modules/Auth/reducers'
 
 const routeInitialState = fromJS({
   locationBeforeTransitions: null,
