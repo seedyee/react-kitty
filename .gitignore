@@ -28,5 +28,9 @@ npm-debug.log
 .eslintcache
 .\#*
 
+# Test output folders
 .nyc_output
 coverage
+
+# editor
+.idea/
