@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
-import { camelCase } from 'lodash-es'
+import { camelCase } from 'lodash'
 
 import 'normalize.css/normalize.css'
 import './Fonts.css'

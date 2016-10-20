@@ -115,7 +115,7 @@
     "json-server": "0.8.22",
     "load-plugins": "^2.1.1",
     "loader-utils": "^0.2.16",
-    "lodash-es": "^4.16.4",
+    "lodash": "^4.16.4",
     "lodash-webpack-plugin": "^0.10.2",
     "lost": "^7.1.0",
     "node-noop": "^1.0.0",

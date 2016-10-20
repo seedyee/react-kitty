@@ -60,7 +60,6 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 - *ESLint* v3 integrated with sensible default configuration.
 - Fetch API Polyfill integrated
 - PostCSS Lost Grid integrated
-- Super modular Lodash-ES with tree shaking
 - Flow Typechecking
 
 
