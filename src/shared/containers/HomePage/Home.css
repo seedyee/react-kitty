@@ -1,5 +1,10 @@
 $textColor: orange;
 
+.Home {
+  width: 360px;
+  margin: 0 auto;
+}
+
 @mixin scale{
   transform: scale(1.2);
 }

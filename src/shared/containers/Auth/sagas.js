@@ -24,7 +24,6 @@ function* loginFlow() {
       yield put(loginSuccess(response))
       alert('logind !') // eslint-disable-line no-alert
       yield put(push('/dashboard'))
-      return response
     } catch (error) {
       yield put(loginFailure(error))
       alert('User doesn\'t exist !') // eslint-disable-line no-alert
@@ -38,7 +37,7 @@ function* logoutFlow() {
     try {
       const response = yield call(api.logout, payload)
       yield put(logoutSuccess(response))
-      return response
+      yield put(push('/'))
     } catch (error) {
       yield put(logoutFailure(error))
     }

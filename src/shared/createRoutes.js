@@ -54,6 +54,9 @@ function resolveNotFoundPage(nextState, cb) {
 const checkAuth = (store) => (nextState, replace) => {
   const logined = store.getState().getIn(['auth', 'logined'])
   if (!logined) {
+    if (typeof document !== 'undefined') {
+      alert('Protected route, Login first !') // eslint-disable-line no-alert
+    }
     replace({
       pathname: '/login',
       state: { nextPathname: nextState.location.pathname },

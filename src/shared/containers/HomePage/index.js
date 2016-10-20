@@ -16,7 +16,7 @@ This is a paragraph rendered using Markdown.
 
 function Home() {
   return (
-    <div>
+    <div className={Styles.Home}>
       <Helmet title="Home" />
       <p className={Styles.intro}>
         Produced with ❤️ by <a href="https://github.com/seedyee">seedyee</a>

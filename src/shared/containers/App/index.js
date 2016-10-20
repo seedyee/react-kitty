@@ -10,22 +10,20 @@ const websiteDescription = 'A NodeJS V6 Universal React Redux Boilerplate with a
 
 console.log('ES Modules Supported:', camelCase('hello-world') === 'helloWorld')
 
-function App({ children }) {
+function App({ children, location: { pathname } }) {
   return (
     <main>
       <Helmet
         htmlAttributes={{ lang: 'en' }}
         titleTemplate="react-kitty - %s"
-        defaultTitle="react-kitty"
+        defaultTitle={pathname.substr(1)}
         meta={[
           { name: 'description', content: websiteDescription },
         ]}
       />
       <div className={Styles.App}>
         <Nav />
-        <div>
-          {children}
-        </div>
+        {children}
       </div>
     </main>
   )

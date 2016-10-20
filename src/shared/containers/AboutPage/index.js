@@ -1,11 +1,12 @@
 import React from 'react'
-import Helmet from 'react-helmet'
 
 function About() {
   return (
     <div>
-      <Helmet title="About" />
-      <p> About Page </p>
+      <p> Euismod nisi porta lorem mollis aliquam ut porttitor leo? Vitae aliquet nec, ullamcorper sit amet risus nullam eget felis eget nunc lobortis mattis aliquam faucibus purus in massa tempor nec.
+      </p>
+      <p> Euismod nisi porta lorem mollis aliquam ut porttitor leo? Vitae aliquet nec, ullamcorper sit amet risus nullam eget felis eget nunc lobortis mattis aliquam faucibus purus in massa tempor nec.
+      </p>
     </div>
   )
 }
