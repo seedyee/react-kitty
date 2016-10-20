@@ -18,6 +18,13 @@ const api = {
       }, 300)
     })
   },
+  register(payload) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ payload })
+      }, 300)
+    })
+  },
 }
 
 export default api

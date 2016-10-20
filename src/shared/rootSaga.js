@@ -1,14 +1,38 @@
-import { fork } from 'redux-saga/effects'
+import { fork, cancel, take } from 'redux-saga/effects'
 
 import reduxFormSubmitSaga from './utils/reduxFormSubmitSaga'
 /* import homeSaga from './containers/HomePage/sagas'*/
 import authSaga from './containers/Auth/sagas'
 
-function* rootSaga() {
+export function* rootSaga() {
   yield [
     fork(reduxFormSubmitSaga),
     fork(authSaga),
   ]
 }
+export const CANCEL_SAGAS_HMR = 'CANCEL_SAGAS_HMR'
 
-export default rootSaga
+function createAbortableSaga(saga) {
+  if (process.env.NODE_ENV === 'development') {
+    return function* main() {
+      const sagaTask = yield fork(saga)
+      yield take(CANCEL_SAGAS_HMR)
+      yield cancel(sagaTask)
+    }
+  }
+  return saga
+}
+
+const SagaManager = {
+  startSaga(sagaMiddleware) {
+    return sagaMiddleware.run(createAbortableSaga(rootSaga))
+  },
+  cancelSaga(store) {
+    store.dispatch({
+      type: CANCEL_SAGAS_HMR,
+    })
+  },
+}
+
+export default SagaManager
+

@@ -11,7 +11,7 @@ import createRoutes from '../shared/createRoutes'
 import { DISABLE_SSR } from './config'
 import { IS_DEVELOPMENT } from '../common/config'
 import configureStore from '../shared/configStore'
-import rootSaga from '../shared/rootSaga'
+import { rootSaga } from '../shared/rootSaga'
 import { selectLocationState } from '../shared/selectors'
 
 /**
