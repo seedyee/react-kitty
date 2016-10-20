@@ -45,15 +45,29 @@ function resolveNotFoundPage(nextState, cb) {
         .catch(handleError)
 }
 
+/**
+ * Checks authentication status on route change
+ * @param  {object}   nextState The state we want to change into when we change routes
+ * @param  {function} replace Function provided by React Router to replace the location
+ */
+
+const checkAuth = (store) => (nextState, replace) => {
+  const logined = store.getState().getIn(['auth', 'logined'])
+  if (!logined) {
+    replace({
+      pathname: '/login',
+      state: { nextPathname: nextState.location.pathname },
+    })
+  }
+}
+
 const routes = store => ( // eslint-disable-line no-unused-vars
   <Route path="/" component={App}>
     <IndexRoute getComponent={resolveIndexPage} />
     <Route path="about" getComponent={resolveAboutPage} />
-    <Route>
-      <Route path="/login" getComponent={resolveLoginPage} />
-      <Route path="/register" getComponent={resolveRegisterPage} />
-      <Route path="/dashboard" getComponent={resolveDashboardPage} />
-    </Route>
+    <Route path="/login" getComponent={resolveLoginPage} />
+    <Route path="/register" getComponent={resolveRegisterPage} />
+    <Route path="/dashboard" onEnter={checkAuth(store)} getComponent={resolveDashboardPage} />
     <Route path="*" getComponent={resolveNotFoundPage} />
   </Route>
 )

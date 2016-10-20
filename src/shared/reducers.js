@@ -7,6 +7,7 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 import { fromJS } from 'immutable'
 import { combineReducers } from 'redux-immutable'
 import { reducer as formReducer } from 'redux-form/immutable'
+import authReducer from './containers/Auth/reducers'
 
 const routeInitialState = fromJS({
   locationBeforeTransitions: null,
@@ -24,8 +25,8 @@ function routeReducer(state = routeInitialState, action) {
 
   return state
 }
-
 export default combineReducers({
   routing: routeReducer,
   form: formReducer,
+  auth: authReducer,
 })

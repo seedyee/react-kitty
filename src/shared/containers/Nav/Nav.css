@@ -1,5 +1,9 @@
 .Nav {
+  display: flex;
+  justify-content: center;
   ul {
+    margin: 0;
+    paddgin: 0;
     font-size: 20px;
     list-style: none;
     display: flex;

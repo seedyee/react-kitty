@@ -1,0 +1,38 @@
+.LoginForm {
+  width: 300px;
+  border: 1px solid #ddd;
+  padding: 30px;
+  input {
+    width: 100%;
+    height: 30px;
+    margin: 6px 0 0 0;
+    padding: 0;
+  }
+}
+
+.field {
+  margin: 20px 0;
+}
+
+.labelContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.forgetPassword {
+  color: blue;
+}
+
+.error {
+  color: red;
+}
+
+.submitBtn, .signUp {
+  padding: 0;
+  margin: 0;
+  width: 102%;
+  height: 30px;
+}
+
+.signUp {
+  margin-top: 30px;
+}

@@ -3,6 +3,7 @@ import Helmet from 'react-helmet'
 import { camelCase } from 'lodash-es'
 import 'normalize.css/normalize.css'
 import './Fonts.css'
+import Styles from './App.css'
 import Nav from '../Nav'
 
 const websiteDescription = 'A NodeJS V6 Universal React Redux Boilerplate with an Amazing Developer Experience.'
@@ -20,9 +21,11 @@ function App({ children }) {
           { name: 'description', content: websiteDescription },
         ]}
       />
-      <Nav />
-      <div>
-        {children}
+      <div className={Styles.App}>
+        <Nav />
+        <div>
+          {children}
+        </div>
       </div>
     </main>
   )

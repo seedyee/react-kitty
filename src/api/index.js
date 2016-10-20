@@ -1,12 +1,12 @@
 const emailList = ['seedyee@mail.com', 'vimniky@mail.com', 'jundo@mail.com']
 const api = {
-  login(payload) {
+  login({ email }) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (emailList.indexOf(payload.email) === -1) {
+        if (emailList.indexOf(email) === -1) {
           reject({ error: true, message: 'User doesn\'t exist !' })
         } else {
-          resolve({ error: false, message: 'logined !' })
+          resolve({ email })
         }
       }, 300)
     })
@@ -14,7 +14,7 @@ const api = {
   logout() {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve({ error: false, message: 'logouted !' })
+        resolve({})
       }, 300)
     })
   },

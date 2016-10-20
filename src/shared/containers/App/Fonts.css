@@ -28,8 +28,8 @@
 
 html{
   font-family: "Source Sans Pro";
-  line-height: 1.4;
-  padding: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
 h1{

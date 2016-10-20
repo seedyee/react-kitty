@@ -16,9 +16,9 @@ import api from '../../../api'
 
 // Users won't get the UI to triggle `LOGOUT` action before them have logined or registered.
 
-function* loginFlow(payload) {
+function* loginFlow() {
   while (true) {
-    yield take(loginActionTypes.REQUEST)
+    const { payload } = yield take(loginActionTypes.REQUEST)
     try {
       const response = yield call(api.login, payload)
       yield put(loginSuccess(response))
@@ -34,7 +34,7 @@ function* loginFlow(payload) {
 
 function* logoutFlow() {
   while (true) {
-    const payload = yield take(logoutActionTypes.REQUEST)
+    const { payload } = yield take(logoutActionTypes.REQUEST)
     try {
       const response = yield call(api.logout, payload)
       yield put(logoutSuccess(response))
