@@ -4,7 +4,7 @@ const api = {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (emailList.indexOf(email) === -1) {
-          reject({ error: true, message: 'User doesn\'t exist !' })
+          reject({ message: `${email} doesn't exist !` })
         } else {
           resolve({ email })
         }
@@ -19,9 +19,13 @@ const api = {
     })
   },
   register(payload) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve({ payload })
+        if (emailList.indexOf(payload.email) !== -1) {
+          reject({ message: `${payload.email} already exist !` })
+        } else {
+          resolve(payload)
+        }
       }, 300)
     })
   },

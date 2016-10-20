@@ -1,5 +1,5 @@
 import immutable from 'immutable'
-import { loginActionTypes, logoutActionTypes } from './actions'
+import { loginActionTypes, logoutActionTypes, registerActionTypes } from './actions'
 
 const initialAuthState = immutable.fromJS({ logined: false, user: {} })
 const auth = (state = initialAuthState, action) => {
@@ -8,6 +8,8 @@ const auth = (state = initialAuthState, action) => {
       return state.set('user', action.payload).set('logined', true)
     case logoutActionTypes.SUCCESS:
       return state.remove('user').set('logined', false)
+    case registerActionTypes.SUCCESS:
+      return state.set('user', action.payload).set('logined', true)
     default:
       return state
   }

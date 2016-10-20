@@ -8,6 +8,10 @@ import {
   logoutActionTypes,
   logoutSuccess,
   logoutFailure,
+
+  registerActionTypes,
+  registerSuccess,
+  registerFailure,
 } from './actions'
 import api from '../../../api'
 
@@ -22,11 +26,11 @@ function* loginFlow() {
     try {
       const response = yield call(api.login, payload)
       yield put(loginSuccess(response))
-      alert('logind !') // eslint-disable-line no-alert
+      alert('login success !') // eslint-disable-line no-alert
       yield put(push('/dashboard'))
     } catch (error) {
       yield put(loginFailure(error))
-      alert('User doesn\'t exist !') // eslint-disable-line no-alert
+      alert(error.message) // eslint-disable-line no-alert
     }
   }
 }
@@ -46,8 +50,16 @@ function* logoutFlow() {
 
 function* registerFlow() {
   while (true) {
-    yield take('REGISTER')
-    // todo
+    const { payload } = yield take(registerActionTypes.REQUEST)
+    try {
+      const response = yield call(api.register, payload)
+      yield put(registerSuccess(response))
+      alert('register sucess !') // eslint-disable-line no-alert
+      yield put(push('/dashboard'))
+    } catch (error) {
+      yield put(registerFailure(error))
+      alert(error.message) // eslint-disable-line no-alert
+    }
   }
 }
 

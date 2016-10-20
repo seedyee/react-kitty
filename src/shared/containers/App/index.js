@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 import { camelCase } from 'lodash-es'
+
 import 'normalize.css/normalize.css'
 import './Fonts.css'
+import './Reset.css'
 import Styles from './App.css'
+
 import Nav from '../Nav'
 
 const websiteDescription = 'A NodeJS V6 Universal React Redux Boilerplate with an Amazing Developer Experience.'

@@ -1,16 +1,19 @@
 .Nav {
   display: flex;
-  justify-content: center;
+  width: 360px;
   ul {
+    width: 100%;
     margin: 0;
-    paddgin: 0;
     font-size: 20px;
     list-style: none;
-    display: flex;
     color: blue;
+    paddgin: 0;
+    display: flex;
+    -webkit-padding-start: 0px;
+    justify-content: space-between;
     li {
+      margin: 10px 0;
       cursor: pointer;
-      margin: 20px;
     }
   }
 }

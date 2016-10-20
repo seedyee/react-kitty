@@ -2,10 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-
-import validate from '../validate'
-import { loginActionTypes } from '../actions'
-import { onSubmitActions } from '../../../utils/reduxFormSubmitSaga'
+import validate from './validate'
+import { loginActionTypes } from './actions'
+import { onSubmitActions } from '../../utils/reduxFormSubmitSaga'
 import Styles from './LoginForm.css'
 
 const renderField = ({ input, label, labelFor, forgetPassword, id, type, meta: { touched, error, warning } }) => (
@@ -60,10 +59,9 @@ LoginForm.propTypes = {
 
 const comp = reduxForm({
   form: 'LoginForm', // a unique name for this form
-  validate: validate(),
+  validate: validate({ register: true }),
   onSubmit: onSubmitActions(loginActionTypes),
 })(LoginForm)
-
 const initialValues = {
   email: 'seedyee@mail.com',
 }

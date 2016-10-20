@@ -4,11 +4,12 @@ const validators = {
   password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
 }
 
-const validate = values => {
+const validate = ({ register } = { register: false }) => values => {
   const errors = {}
   const email = values.get('email')
   const password = values.get('password')
-  if (!values.get('email')) {
+  const username = values.get('username')
+  if (!email) {
     errors.email = 'Required'
   } else if (!validators.email.test(email)) {
     errors.email = 'Invalid email address'
@@ -19,6 +20,11 @@ const validate = values => {
   } else if (!validators.password.test(password)) {
     errors.password = 'Minimum 8 characters at least 1 Alphabet and 1 Number'
   }
+
+  if (register && !username) {
+    errors.username = 'Required'
+  }
+
   return errors
 }
 

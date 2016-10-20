@@ -33,6 +33,7 @@ function resolveRegisterPage(nextState, cb) {
     .then(module => cb(null, module.default))
     .catch(handleError)
 }
+
 function resolveDashboardPage(nextState, cb) {
   System.import('./containers/DashboardPage')
         .then(module => cb(null, module.default))
@@ -50,6 +51,13 @@ function resolveNotFoundPage(nextState, cb) {
  * @param  {object}   nextState The state we want to change into when we change routes
  * @param  {function} replace Function provided by React Router to replace the location
  */
+const redirectToHome = (store) => (nextState, replace) => {
+  // If already logined don't let user enter `/login` or `/register` route
+  const logined = store.getState().getIn(['auth', 'logined'])
+  if (logined) {
+    replace('/')
+  }
+}
 
 const checkAuth = (store) => (nextState, replace) => {
   const logined = store.getState().getIn(['auth', 'logined'])
@@ -67,9 +75,9 @@ const checkAuth = (store) => (nextState, replace) => {
 const routes = store => ( // eslint-disable-line no-unused-vars
   <Route path="/" component={App}>
     <IndexRoute getComponent={resolveIndexPage} />
-    <Route path="about" getComponent={resolveAboutPage} />
-    <Route path="/login" getComponent={resolveLoginPage} />
-    <Route path="/register" getComponent={resolveRegisterPage} />
+    <Route path="/about" getComponent={resolveAboutPage} />
+    <Route path="/login" onEnter={redirectToHome(store)} getComponent={resolveLoginPage} />
+    <Route path="/register" onEnter={redirectToHome(store)} getComponent={resolveRegisterPage} />
     <Route path="/dashboard" onEnter={checkAuth(store)} getComponent={resolveDashboardPage} />
     <Route path="*" getComponent={resolveNotFoundPage} />
   </Route>
