@@ -1,3 +1,4 @@
+import bodyParser from 'body-parser'
 import express from 'express'
 import compression from 'compression'
 import shrinkRay from 'shrink-ray'
@@ -46,6 +47,8 @@ export default function generateServer() {
   // https://github.com/aickin/shrink-ray
   app.use(shrinkRay())
 
+  const jsonBodyParser = bodyParser.json()
+  app.use(jsonBodyParser)
   // Configure static serving of our webpack bundled client files.
   app.use(
     CLIENT_BUNDLE_HTTP_PATH,

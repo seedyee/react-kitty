@@ -22,7 +22,6 @@ const history = syncHistoryWithStore(browserHistory, store, {
 })
 
 // start rootSagas on client
-/* store.runSaga(rootSaga)*/
 store.startAbortableSaga()
 function routerError(error) {
   // TODO: Error handling.

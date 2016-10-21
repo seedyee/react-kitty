@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import { fork, take, call, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import {
@@ -5,7 +6,8 @@ import {
   logoutActions,
   registerActions,
 } from './actions'
-import api from '../../../api'
+
+import * as api from '../../../api'
 
 // We won't let user to tiggle `LOGOUT` action while the `login` or `register` effect is going on.
 // So we don't need to care about a race condition.
@@ -16,13 +18,14 @@ function* loginFlow() {
   while (true) {
     const { payload } = yield take(loginActions.REQUEST)
     try {
-      const response = yield call(api.login, payload)
-      yield put(loginActions.success(response))
-      alert('login success !') // eslint-disable-line no-alert
+      const { error, ...rest } = yield call(api.login, payload)
+      if (error) throw new Error(error.text)
+      yield put(loginActions.success(rest))
+      alert('login success !')
       yield put(push('/dashboard'))
-    } catch (error) {
-      yield put(loginActions.failure(error))
-      alert(error.message) // eslint-disable-line no-alert
+    } catch (e) {
+      yield put(loginActions.failure(e))
+      alert(e)
     }
   }
 }
@@ -31,11 +34,13 @@ function* logoutFlow() {
   while (true) {
     const { payload } = yield take(logoutActions.REQUEST)
     try {
-      const response = yield call(api.logout, payload)
-      yield put(logoutActions.success(response))
+      const { error, ...rest } = yield call(api.logout, payload)
+      if (error) throw new Error(error.text)
+      yield put(logoutActions.success(rest))
       yield put(push('/'))
-    } catch (error) {
-      yield put(logoutActions.failure(error))
+    } catch (e) {
+      yield put(logoutActions.failure(e))
+      alert(e)
     }
   }
 }
@@ -44,13 +49,14 @@ function* registerFlow() {
   while (true) {
     const { payload } = yield take(registerActions.REQUEST)
     try {
-      const response = yield call(api.register, payload)
-      yield put(registerActions.success(response))
-      alert('register sucess !') // eslint-disable-line no-alert
+      const { error, ...rest } = yield call(api.register, payload)
+      if (error) throw new Error(error.text)
+      yield put(registerActions.success(rest))
+      alert('register sucess !')
       yield put(push('/dashboard'))
-    } catch (error) {
-      yield put(registerActions.failure(error))
-      alert(error.message) // eslint-disable-line no-alert
+    } catch (e) {
+      yield put(registerActions.failure(e))
+      alert(e)
     }
   }
 }

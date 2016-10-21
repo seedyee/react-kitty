@@ -1,0 +1,34 @@
+import express from 'express'
+
+const router = express.Router() // eslint-disable-line new-cap
+
+const emailMap = {
+  'seedyee@mail.com': 'aaaaaaa1',
+  'vimniky@mail.com': 'aaaaaaa1',
+}
+
+router.post('/login', (req, res) => {
+  const { email, password } = req.body
+  if (!emailMap[email]) {
+    res.jons({ error: { text: `${email} doesn't exisit !` } })
+  } else if (emailMap[email] !== password) {
+    res.json({ error: { text: 'password incorrect' } })
+  }
+  res.json({ email })
+})
+
+router.post('/register', (req, res) => {
+  const { email, password } = req.body
+  if (emailMap[email]) {
+    res.json({ error: { text: `${email} already exisits !` } })
+  }
+  emailMap[email] = password
+  res.json({ email })
+})
+
+router.get('/logout', (req, res) => {
+  res.json({})
+})
+
+export default router
+
