@@ -6,7 +6,7 @@ import reducers from './reducers'
 import SagaManager from './rootSaga'
 
 const sagaMiddleware = createSagaMiddleware()
-const devtools = (typeof window !== 'undefined' && window.devToolsExtension) || (() => noop => noop)
+const devtools = (process.env.NODE_ENV === 'development' && typeof window !== 'undefined' && window.devToolsExtension) || (() => noop => noop)
 
 // hot relaod sagas
 // https://gist.github.com/hoschi/6538249ad079116840825e20c48f1690
