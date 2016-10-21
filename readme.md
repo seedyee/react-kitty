@@ -55,7 +55,6 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
 ## Work in progress
 
-- Express proxy server
 - *Stylelint* CSS linting
 - Fetch API Polyfill integrated
 - PostCSS Lost Grid integrated
