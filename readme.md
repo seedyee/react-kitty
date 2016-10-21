@@ -55,9 +55,8 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
 ## Work in progress
 
-- *Ava*, *Sinon* and *Enzyme* for unit testing
+- Express proxy server
 - *Stylelint* CSS linting
-- *ESLint* v3 integrated with sensible default configuration.
 - Fetch API Polyfill integrated
 - PostCSS Lost Grid integrated
 - Flow Typechecking
