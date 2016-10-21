@@ -1,17 +1,9 @@
 import { fork, take, call, put } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import {
-  loginActionTypes,
-  loginSuccess,
-  loginFailure,
-
-  logoutActionTypes,
-  logoutSuccess,
-  logoutFailure,
-
-  registerActionTypes,
-  registerSuccess,
-  registerFailure,
+  loginActions,
+  logoutActions,
+  registerActions,
 } from './actions'
 import api from '../../../api'
 
@@ -22,14 +14,14 @@ import api from '../../../api'
 
 function* loginFlow() {
   while (true) {
-    const { payload } = yield take(loginActionTypes.REQUEST)
+    const { payload } = yield take(loginActions.REQUEST)
     try {
       const response = yield call(api.login, payload)
-      yield put(loginSuccess(response))
+      yield put(loginActions.success(response))
       alert('login success !') // eslint-disable-line no-alert
       yield put(push('/dashboard'))
     } catch (error) {
-      yield put(loginFailure(error))
+      yield put(loginActions.failure(error))
       alert(error.message) // eslint-disable-line no-alert
     }
   }
@@ -37,27 +29,27 @@ function* loginFlow() {
 
 function* logoutFlow() {
   while (true) {
-    const { payload } = yield take(logoutActionTypes.REQUEST)
+    const { payload } = yield take(logoutActions.REQUEST)
     try {
       const response = yield call(api.logout, payload)
-      yield put(logoutSuccess(response))
+      yield put(logoutActions.success(response))
       yield put(push('/'))
     } catch (error) {
-      yield put(logoutFailure(error))
+      yield put(logoutActions.failure(error))
     }
   }
 }
 
 function* registerFlow() {
   while (true) {
-    const { payload } = yield take(registerActionTypes.REQUEST)
+    const { payload } = yield take(registerActions.REQUEST)
     try {
       const response = yield call(api.register, payload)
-      yield put(registerSuccess(response))
+      yield put(registerActions.success(response))
       alert('register sucess !') // eslint-disable-line no-alert
       yield put(push('/dashboard'))
     } catch (error) {
-      yield put(registerFailure(error))
+      yield put(registerActions.failure(error))
       alert(error.message) // eslint-disable-line no-alert
     }
   }

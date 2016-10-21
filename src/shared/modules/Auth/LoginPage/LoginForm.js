@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
 import validate from '../validate'
-import { loginActionTypes } from '../actions'
+import { loginActions } from '../actions'
 import { onSubmitActions } from '../../../utils/reduxFormSubmitSaga'
 import Styles from './LoginForm.css'
 
@@ -61,7 +61,7 @@ LoginForm.propTypes = {
 const comp = reduxForm({
   form: 'LoginForm', // a unique name for this form
   validate: validate(),
-  onSubmit: onSubmitActions(loginActionTypes),
+  onSubmit: onSubmitActions(loginActions),
 })(LoginForm)
 
 const initialValues = {

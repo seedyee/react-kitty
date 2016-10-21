@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form/immutable'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import validate from '../validate'
-import { registerActionTypes } from '../actions'
+import { registerActions } from '../actions'
 import { onSubmitActions } from '../../../utils/reduxFormSubmitSaga'
 import Styles from './register.css'
 
@@ -63,7 +63,7 @@ RegisterForm.propTypes = {
 const comp = reduxForm({
   form: 'RegisterForm', // a unique name for this form
   validate: validate({ register: true }),
-  onSubmit: onSubmitActions(registerActionTypes),
+  onSubmit: onSubmitActions(registerActions),
 })(RegisterForm)
 
 const mapStateToProps = (state) => ({ // eslint-disable-line no-unused-vars

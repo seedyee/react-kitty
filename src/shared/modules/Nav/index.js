@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import Styles from './Nav.css'
-import { logoutRequest } from '../Auth/actions'
+import { logoutActions } from '../Auth/actions'
 import { selectLogined } from '../Auth/selectors'
 
 class Nav extends React.Component {
@@ -31,5 +31,5 @@ Nav.propTypes = {
 const mapStateToProps = (state) => ({
   logined: selectLogined(state),
 })
-export default connect(mapStateToProps, { push, logoutRequest })(Nav)
+export default connect(mapStateToProps, { push, logoutRequest: logoutActions.request })(Nav)
 
