@@ -7,7 +7,7 @@ import {
   registerActions,
 } from './actions'
 
-import * as api from '../../../api'
+import * as api from '../../api'
 
 // We won't let user to tiggle `LOGOUT` action while the `login` or `register` effect is going on.
 // So we don't need to care about a race condition.

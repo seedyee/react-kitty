@@ -29,7 +29,7 @@ const parseJSON = (response) => {
   throw new Error('Accept text/plain and application/json but not other types !')
 }
 
-const urlRoot = `http://localhost:${process.env.SERVER_PORT}'`
+const urlRoot = `http://localhost:${process.env.SERVER_PORT}`
 const apiPrefix = '/dev/api'
 const request = ({ method, url, data }) => fetch(urlRoot + apiPrefix + url, {
   // Use the include value to send cookies in a
