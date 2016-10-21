@@ -386,7 +386,9 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         "process.env.CLIENT_BUNDLE_OUTPUT_PATH": JSON.stringify(process.env.CLIENT_BUNDLE_OUTPUT_PATH),
         "process.env.CLIENT_BUNDLE_ASSETS_FILENAME": JSON.stringify(process.env.CLIENT_BUNDLE_ASSETS_FILENAME),
         "process.env.CLIENT_BUNDLE_HTTP_PATH": JSON.stringify(process.env.CLIENT_BUNDLE_HTTP_PATH),
-        "process.env.CLIENT_BUNDLE_CACHE_MAXAGE": JSON.stringify(process.env.CLIENT_BUNDLE_CACHE_MAXAGE)
+        "process.env.CLIENT_BUNDLE_CACHE_MAXAGE": JSON.stringify(process.env.CLIENT_BUNDLE_CACHE_MAXAGE),
+        "process.env.PROXY_SERVER_ROOT": JSON.stringify(process.env.PROXY_SERVER_ROOT),
+        "process.env.PROXY_SERVER_PORT": JSON.stringify(process.env.PROXY_SERVER_PORT)
       }),
 
       // Generates a JSON file containing a map of all the output files for

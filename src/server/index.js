@@ -1,8 +1,12 @@
 import universalReactAppMiddleware from './middleware'
 import { SERVER_PORT } from './config'
 import generateServer from './factory'
+import proxyMiddleware from './proxy'
 
 const app = generateServer()
+
+// proxy `/api` requests
+app.get('/api', proxyMiddleware())
 
 // Bind our universal react app middleware as the handler for all get requests.
 app.get('*', universalReactAppMiddleware)
