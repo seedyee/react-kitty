@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-
+import { Redirect } from 'react-router'
 import validate from '../validate'
-import { loginActions } from '../actions'
 import { onSubmitActions } from '../../../utils/reduxFormSubmitSaga'
 import Styles from './LoginForm.css'
 
@@ -22,8 +20,22 @@ const renderField = ({ input, label, labelFor, forgetPassword, id, type, meta: {
 )
 
 class LoginForm extends Component {
+  constructor() {
+    super()
+    this.state = {
+      redirectTo: null,
+    }
+  }
+
+  redirectTo = () => {
+    this.setState({ redirectTo: '/register' })
+  }
+
   render() {
-    const { handleSubmit, submitting, pristine, pushRoute } = this.props
+    const { handleSubmit, submitting, pristine, logined } = this.props
+    const { redirectTo } = this.state
+    if (logined) return <Redirect to="/dashboard" />
+    if (redirectTo) return <Redirect to={redirectTo} />
     return (
       <form onSubmit={handleSubmit} className={Styles.LoginForm}>
         <h1> Sigin in </h1>
@@ -45,7 +57,7 @@ class LoginForm extends Component {
           forgetPassword="Forget your password ?"
         />
         <button className={Styles.submitBtn} type="submit" disabled={pristine || submitting}>Submit</button>
-        <button className={Styles.signUp} type="button" disabled={submitting} onClick={() => pushRoute('/register')}>Sign up</button>
+        <button className={Styles.signUp} type="button" disabled={submitting} onClick={this.redirectTo}>Sign up</button>
       </form>
     )
   }
@@ -55,8 +67,11 @@ LoginForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
-  pushRoute: PropTypes.func.isRequired,
+  logined: PropTypes.bool.isRequired,
 }
+
+import { selectLogined } from '../selectors'
+import { loginActions } from '../actions'
 
 const comp = reduxForm({
   form: 'LoginForm', // a unique name for this form
@@ -70,6 +85,7 @@ const initialValues = {
 
 const mapStateToProps = (state) => ({ // eslint-disable-line no-unused-vars
   initialValues,
+  logined: selectLogined(state),
 })
 
-export default connect(mapStateToProps, { pushRoute: push })(comp)
+export default connect(mapStateToProps)(comp)

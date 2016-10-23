@@ -1,66 +1,41 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import Router from 'react-router/lib/Router'
-import browserHistory from 'react-router/lib/browserHistory'
-import match from 'react-router/lib/match'
+import { BrowserRouter } from 'react-router'
 import { Provider } from 'react-redux'
-import { syncHistoryWithStore } from 'react-router-redux'
-import createRoutes from '../shared/createRoutes'
 import configureStore from '../shared/configStore'
-/* import rootSaga from '../shared/rootSaga'*/
-
+import App from '../shared/modules/App/index'
 import { IS_HOT_DEVELOPMENT } from '../common/config'
-import { selectLocationState } from '../shared/selectors'
 
-// Get the DOM Element that will host our React application.
 const container = document.querySelector('#app')
 const initialState = window.APP_STATE || {} // eslint-disable-line
-const store = configureStore(initialState, browserHistory)
-const history = syncHistoryWithStore(browserHistory, store, {
-  selectLocationState: selectLocationState(),
-})
-
+const store = configureStore(initialState)
 // start rootSagas on client
 store.startAbortableSaga()
-function routerError(error) {
-  // TODO: Error handling.
-  console.error('React Router match failed.') // eslint-disable-line no-console
-  if (error) { console.error(error) } // eslint-disable-line no-console
+
+
+function renderApp(Content) {
+  render(
+    <AppContainer>
+      <BrowserRouter>
+        <Provider store={store}>
+          <Content />
+        </Provider>
+      </BrowserRouter>
+    </AppContainer>,
+    container
+  )
 }
 
-
-function renderApp() {
-  // As we are using dynamic react-router routes we have to use the following
-  // asynchronous routing mechanism supported by the `match` function.
-  // @see https://github.com/reactjs/react-router/blob/master/docs/guides/ServerRendering.md
-  match({ history, routes: createRoutes(store) }, (error, redirectLocation, renderProps) => {
-    if (error) {
-      routerError(error)
-    } else if (redirectLocation) {
-      return
-    } else if (renderProps) {
-      render(
-        <AppContainer>
-          <Provider store={store}>
-            <Router {...renderProps} />
-          </Provider>
-        </AppContainer>,
-        container
-      )
-    } else {
-      routerError()
-    }
-  })
-}
-
-// The following is needed so that we can hot reload our App.
-if (IS_HOT_DEVELOPMENT) {
+// The following is needed so that we can support hot reloading our application.
+if (process.env.NODE_ENV === 'development' && module.hot && IS_HOT_DEVELOPMENT) {
   // Accept changes to this file for hot reloading.
   module.hot.accept('./index.js')
-
-  // Any changes to our routes will cause a hotload re-render.
-  module.hot.accept('../shared/createRoutes', renderApp)
+  // Any changes to our App will cause a hotload re-render.
+  module.hot.accept(
+    '../shared/modules/App/index',
+    () => renderApp(require('../shared/modules/App/index').default) // eslint-disable-line
+  )
 }
 
-renderApp()
+renderApp(App)

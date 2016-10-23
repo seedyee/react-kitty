@@ -7,7 +7,7 @@ const auth = (state = initialAuthState, action) => {
     case loginActions.SUCCESS:
       return state.set('user', action.payload).set('logined', true)
     case logoutActions.SUCCESS:
-      return state.remove('user').set('logined', false)
+      return state.set('user', {}).set('logined', false)
     case registerActions.SUCCESS:
       return state.set('user', action.payload).set('logined', true)
     default:

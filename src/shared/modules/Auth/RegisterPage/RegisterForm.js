@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { Redirect } from 'react-router'
 import validate from '../validate'
-import { registerActions } from '../actions'
 import { onSubmitActions } from '../../../utils/reduxFormSubmitSaga'
 import Styles from './register.css'
 
@@ -18,8 +17,22 @@ const renderField = ({ input, label, id, type, meta: { touched, error, warning }
 )
 
 class RegisterForm extends Component {
+  constructor() {
+    super()
+    this.state = {
+      redirectTo: null,
+    }
+  }
+
+  redirectTo = () => {
+    this.setState({ redirectTo: '/register' })
+  }
+
   render() {
-    const { handleSubmit, submitting, pristine, pushRoute } = this.props
+    const { handleSubmit, submitting, pristine, logined } = this.props
+    const { redirectTo } = this.state
+    if (logined) return <Redirect to="/dashboard" />
+    if (redirectTo) return <Redirect to={redirectTo} />
     return (
       <form onSubmit={handleSubmit} className={Styles.RegisterForm}>
         <h1> Sigin up </h1>
@@ -47,7 +60,7 @@ class RegisterForm extends Component {
         <button className={Styles.submitBtn} type="submit" disabled={pristine || submitting}>Sigin up</button>
         <p className={Styles.signIn}>
           Already have an account?
-          <button type="button" disabled={submitting} onClick={() => pushRoute('/login')}>Sign in</button>
+          <button type="button" disabled={submitting} onClick={this.redirectTo}>Sign in</button>
         </p>
       </form>
     )
@@ -58,7 +71,11 @@ RegisterForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
+  logined: PropTypes.bool.isRequired,
 }
+
+import { selectLogined } from '../selectors'
+import { registerActions } from '../actions'
 
 const comp = reduxForm({
   form: 'RegisterForm', // a unique name for this form
@@ -66,8 +83,9 @@ const comp = reduxForm({
   onSubmit: onSubmitActions(registerActions),
 })(RegisterForm)
 
-const mapStateToProps = (state) => ({ // eslint-disable-line no-unused-vars
+const mapStateToProps = (state) => ({
+  logined: selectLogined(state),
 })
 
-export default connect(mapStateToProps, { pushRoute: push })(comp)
+export default connect(mapStateToProps)(comp)
 

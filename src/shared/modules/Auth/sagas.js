@@ -1,6 +1,5 @@
 /* eslint-disable no-alert */
 import { fork, take, call, put } from 'redux-saga/effects'
-import { push } from 'react-router-redux'
 import {
   loginActions,
   logoutActions,
@@ -22,7 +21,6 @@ function* loginFlow() {
       if (error) throw new Error(error.text)
       yield put(loginActions.success(rest))
       alert('login success !')
-      yield put(push('/dashboard'))
     } catch (e) {
       yield put(loginActions.failure(e))
       alert(e)
@@ -37,7 +35,6 @@ function* logoutFlow() {
       const { error, ...rest } = yield call(api.logout, payload)
       if (error) throw new Error(error.text)
       yield put(logoutActions.success(rest))
-      yield put(push('/'))
     } catch (e) {
       yield put(logoutActions.failure(e))
       alert(e)
@@ -53,7 +50,6 @@ function* registerFlow() {
       if (error) throw new Error(error.text)
       yield put(registerActions.success(rest))
       alert('register sucess !')
-      yield put(push('/dashboard'))
     } catch (e) {
       yield put(registerActions.failure(e))
       alert(e)
