@@ -1,8 +1,4 @@
-export const HELLO = '@@HOME/HELLO'
-export const  hello = () => ({
-  type: HELLO,
-  payload: 'haha',
-})
-export default {
-  HELLO,
-}
+import { createActions } from '../../utils/actions'
+
+const prefix = 'HOME'
+export const loadUsersActions = createActions(prefix, 'LOAD_USERS')

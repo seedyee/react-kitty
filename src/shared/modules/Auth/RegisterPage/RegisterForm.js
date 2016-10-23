@@ -25,7 +25,7 @@ class RegisterForm extends Component {
   }
 
   redirectTo = () => {
-    this.setState({ redirectTo: '/register' })
+    this.setState({ redirectTo: '/login' })
   }
 
   render() {

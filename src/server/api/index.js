@@ -4,7 +4,7 @@ const router = express.Router() // eslint-disable-line new-cap
 
 const emailMap = {
   'seedyee@mail.com': 'aaaaaaa1',
-  'vimniky@mail.com': 'aaaaaaa1',
+  'jundo@mail.com': 'aaaaaaa1',
 }
 
 router.post('/login', (req, res) => {
@@ -28,6 +28,10 @@ router.post('/register', (req, res) => {
 
 router.get('/logout', (req, res) => {
   res.json({})
+})
+
+router.get('/users', (req, res) => {
+  res.json(Object.keys(emailMap))
 })
 
 export default router

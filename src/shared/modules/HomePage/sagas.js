@@ -1,23 +1,26 @@
-import { put, take, fork } from 'redux-saga/effects'
+import { put, call, fork, select } from 'redux-saga/effects'
 
-import { HELLO } from './actions'
-let count = 1
+import * as api from '../../api'
+import { selectUsers } from './selectors'
+import { loadUsersActions } from './actions'
 
-function* hello() {
-  yield put({ type: HELLO, payload: `Hello ${count += 1}` })
-  yield put({ type: HELLO, payload: `Hello ${count += 1}` })
-}
-
-function* watchHello() {
-  while (true) {
-    const action = yield take(HELLO)
-    console.log(action.payload)
+// We are using SSR(server-side-rendering), if everything goes well we should have users in our
+// initialState thus we don't need to request users on client side again.
+// actually, in client side this saga does nothing and it would return directly.
+function* loadUsers() {
+  const users = yield select(selectUsers)
+  if (users) return
+  yield put(loadUsersActions.request())
+  try {
+    const response = yield call(api.loadUsers)
+    yield put(loadUsersActions.success(response))
+  } catch (e) {
+    yield put(loadUsersActions.failure(e))
   }
 }
 
 export default function* homeSaga() {
   yield [
-    fork(watchHello),
-    fork(hello),
+    fork(loadUsers),
   ]
 }

@@ -1,8 +1,8 @@
-import { createActionTypes } from '../../utils/actions'
+import { createActions } from '../../utils/actions'
 
 const prefix = 'AUTH'
 
-export const loginActions = createActionTypes(prefix, 'LOGIN')
-export const logoutActions = createActionTypes(prefix, 'LOGOUT')
-export const registerActions = createActionTypes(prefix, 'REGISTER')
+export const loginActions = createActions(prefix, 'LOGIN')
+export const logoutActions = createActions(prefix, 'LOGOUT')
+export const registerActions = createActions(prefix, 'REGISTER')
 

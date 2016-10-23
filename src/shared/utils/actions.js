@@ -7,7 +7,7 @@ const checker = (str) => {
   }
 }
 
-export const createActionTypes = (prefix, name = prefix, actionCreator = defaultActionCrator) => {
+export const createActions = (prefix, name = prefix, actionCreator = defaultActionCrator) => {
   checker(prefix)
   checker(name)
   const actions = {}
