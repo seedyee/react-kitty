@@ -14,12 +14,12 @@ const store = configureStore(initialState)
 store.startAbortableSaga()
 
 
-function renderApp(Content) {
+function renderApp(RootComponent) {
   render(
     <AppContainer>
       <BrowserRouter>
         <Provider store={store}>
-          <Content />
+          <RootComponent />
         </Provider>
       </BrowserRouter>
     </AppContainer>,
