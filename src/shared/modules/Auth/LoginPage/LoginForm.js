@@ -80,7 +80,6 @@ const comp = reduxForm({
 })(LoginForm)
 
 const initialValues = {
-  email: 'seedyee@mail.com',
 }
 
 const mapStateToProps = (state) => ({ // eslint-disable-line no-unused-vars
