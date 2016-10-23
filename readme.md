@@ -40,7 +40,8 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 - *ReactJS* as the view layer.
 - Redux for state manage
 - Redux Saga for side effects manage
-- React Router as the router.
+- React Router v4 as the router.
+- Immutable-js persistent data collections which increase efficiency and simplicity.
 - React Router redux - Ruthlessly simple bindings to keep react-router and redux in sync.
 - *React Helmet* allowing control of the page title/meta/styles/scripts from within your components. Direct control for your SEO needs.
 - CSS Support with CSS modules and additional flexible full PostCSS chain for advanced transformations e.g. autoprefixer
