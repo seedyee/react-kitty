@@ -17,7 +17,7 @@
     "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "nsp": "nsp check --output summary",
-    "test": "ava \"src/**/*.test.js\"",
+    "test": "ava",
     "coverage": "nyc npm run test",
     "watch:test": "npm run test -- --watch",
     "lint": "npm run lint:js",
@@ -60,7 +60,10 @@
       "./setup-test-env.js"
     ],
     "verbose": true,
-    "babel": "inherit"
+    "babel": "inherit",
+    "files": [
+      "src/**/*.test.js"
+    ]
   },
   "dependencies": {
     "assets-webpack-plugin": "^3.5.0",
@@ -70,6 +73,7 @@
     "awesome-typescript-loader": "^2.2.4",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
+    "babel-eslint": "7.0.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-lodash": "^3.2.9",
     "babel-plugin-transform-class-properties": "^6.16.0",
