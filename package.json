@@ -17,7 +17,7 @@
     "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "nsp": "nsp check --output summary",
-    "test": "ava \"src/**/*.test.js\" --verbose --watch",
+    "test": "ava \"src/**/*.test.js\"",
     "coverage": "nyc npm run test",
     "watch:test": "npm run test -- --watch",
     "lint": "npm run lint:js",
@@ -59,11 +59,12 @@
     "require": [
       "./setup-test-env.js"
     ],
+    "verbose": true,
     "babel": {
       "presets": [
-        "es2015",
         "latest",
-        "react"
+        "react",
+        "stage-0"
       ]
     }
   },
@@ -84,6 +85,7 @@
     "babel-preset-babili": "0.0.5",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "6.16.0",
     "babel-register": "6.16.3",
     "babel-runtime": "^6.11.6",
     "babili-webpack-plugin": "0.0.5",
