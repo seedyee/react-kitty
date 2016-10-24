@@ -10,7 +10,7 @@ const emailMap = {
 router.post('/login', (req, res) => {
   const { email, password } = req.body
   if (!emailMap[email]) {
-    res.jons({ error: { text: `${email} doesn't exisit !` } })
+    res.json({ error: { text: `${email} doesn't exisit !` } })
   } else if (emailMap[email] !== password) {
     res.json({ error: { text: 'password incorrect' } })
   }
