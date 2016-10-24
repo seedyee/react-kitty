@@ -52,14 +52,13 @@ export default function universalMiddleware(req, res) {
     res.end()
     return
   }
-
   try {
     store.runSaga(rootSaga).done.then(() => {
       const html = render(
         rootComponent,
         store.getState().toJS()
       )
-      res.status(result.missed ? 404 : 200).send(html)
+      res.send(html)
     })
 
     // Trigger sagas for component to run
