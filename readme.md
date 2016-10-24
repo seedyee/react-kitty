@@ -1,29 +1,16 @@
-# Advanced Boilerplate<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
-
-[sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
-[sponsor]: https://www.sebastian-software.de
-[deps]: https://david-dm.org/sebastian-software/advanced-boilerplate
-[deps-img]: https://david-dm.org/sebastian-software/advanced-boilerplate.svg
-[npm]: https://www.npmjs.com/package/advanced-boilerplate
-[npm-downloads-img]: https://img.shields.io/npm/dm/advanced-boilerplate.svg
-[npm-version-img]: https://img.shields.io/npm/v/advanced-boilerplate.svg
-[travis-img]: https://img.shields.io/travis/sebastian-software/advanced-boilerplate/master.svg?branch=master&label=unix%20build
-[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/advanced-boilerplate/master.svg?label=windows%20build
-[travis]: https://travis-ci.org/sebastian-software/advanced-boilerplate
-[appveyor]: https://ci.appveyor.com/project/swernerx/advanced-boilerplate/branch/master
-
+# React-kitty
 
 A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.
 
 
 ## TOC
 
- - [About](https://github.com/sebastian-software/advanced-boilerplate#about)
- - [Features](https://github.com/sebastian-software/advanced-boilerplate#features)
- - [Overview](https://github.com/sebastian-software/advanced-boilerplate#overview)
- - [Project Structure](https://github.com/sebastian-software/advanced-boilerplate#project-structure)
- - [NPM Commands](https://github.com/sebastian-software/advanced-boilerplate#npm-script-commands)
- - [References](https://github.com/sebastian-software/advanced-boilerplate#references)
+ - [About](https://github.com/seedyee/react-kitty#about)
+ - [Features](https://github.com/seedyee/react-kitty#features)
+ - [Overview](https://github.com/seedyee/react-kitty#overview)
+ - [Project Structure](https://github.com/seedyee/react-kitty#project-structure)
+ - [NPM Commands](https://github.com/seedyee/react-kitty#npm-script-commands)
+ - [References](https://github.com/seedyee/react-kitty#references)
 
 
 ## About
@@ -63,8 +50,6 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 
 
 ## Overview
-
-Data persistence, test frameworks, and all the other bells and whistles have been explicitly excluded from this boilerplate. It's up to you to decide what technologies you would like to add to your own implementation based upon your own needs, this boilerplate simply serves as a clean base upon which to do so.
 
 This boilerplate uses Webpack 2 to produce bundles for both the client and the
 server code.
