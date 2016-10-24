@@ -9,7 +9,7 @@ A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.
  - [Features](https://github.com/seedyee/react-kitty#features)
  - [Overview](https://github.com/seedyee/react-kitty#overview)
  - [Project Structure](https://github.com/seedyee/react-kitty#project-structure)
- - [NPM Commands](https://github.com/seedyee/react-kitty#npm-script-commands)
+ - [NPM Commands](https://github.com/seedyee/react-kitty#npm-commands)
  - [References](https://github.com/seedyee/react-kitty#references)
 
 
@@ -27,9 +27,8 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 - *ReactJS* as the view layer.
 - Redux for state manage
 - Redux Saga for side effects manage
-- React Router v4 as the router.
+- React Router v4  Declarative routing for React.
 - Immutable-js persistent data collections which increase efficiency and simplicity.
-- React Router redux - Ruthlessly simple bindings to keep react-router and redux in sync.
 - *React Helmet* allowing control of the page title/meta/styles/scripts from within your components. Direct control for your SEO needs.
 - CSS Support with CSS modules and additional flexible full PostCSS chain for advanced transformations e.g. autoprefixer
 - Fully integrated asset support for referencing files in CSS and JavaScript.
