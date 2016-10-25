@@ -18,7 +18,9 @@ import NotFoundPage from '../NotFoundPage'
 
 const websiteDescription = 'A NodeJS V6 Universal React Boilerplate with an Amazing Developer Experience.'
 
-if (process.env.NODE_ENV === 'development')console.log('ES Modules Supported:', camelCase('hello-world') === 'helloWorld')
+if (process.env.NODE_ENV === 'development') {
+  console.log('ES Modules Supported:', camelCase('hello-world') === 'helloWorld')
+}
 
 function App() {
   return (

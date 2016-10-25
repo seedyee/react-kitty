@@ -4,7 +4,7 @@ import { AppContainer } from 'react-hot-loader'
 import { BrowserRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import configureStore from '../shared/configStore'
-import App from '../shared/modules/App/index'
+import App from '../shared/modules/App'
 import { IS_HOT_DEVELOPMENT } from '../common/config'
 
 const container = document.querySelector('#app')
@@ -13,13 +13,12 @@ const store = configureStore(initialState)
 // start rootSagas on client
 store.startAbortableSaga()
 
-
-function renderApp(RootComponent) {
+function renderApp() {
   render(
     <AppContainer>
       <BrowserRouter>
         <Provider store={store}>
-          <RootComponent />
+          <App />
         </Provider>
       </BrowserRouter>
     </AppContainer>,
@@ -28,14 +27,14 @@ function renderApp(RootComponent) {
 }
 
 // The following is needed so that we can support hot reloading our application.
-if (process.env.NODE_ENV === 'development' && module.hot && IS_HOT_DEVELOPMENT) {
+if (IS_HOT_DEVELOPMENT) {
   // Accept changes to this file for hot reloading.
   module.hot.accept('./index.js')
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept(
-    '../shared/modules/App/index',
-    () => renderApp(require('../shared/modules/App/index').default) // eslint-disable-line
+    '../shared/modules/App',
+    () => renderApp(require('../shared/modules/App').default) // eslint-disable-line
   )
 }
 
-renderApp(App)
+renderApp()
