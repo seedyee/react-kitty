@@ -5,20 +5,21 @@ import Helmet from 'react-helmet'
 import { readFileSync } from 'fs'
 
 import assets from './assets'
+import { CLIENT_CHUNKHASHES_MANIFESTJSON_FILEPATH } from './config'
 
-import { CLIENT_BUNDLE_MANIFEST_FILEPATH } from './config'
-
-let ClientManifest
-try {
-  ClientManifest = readFileSync(CLIENT_BUNDLE_MANIFEST_FILEPATH, 'utf8')
-} catch (ex) {
-  ClientManifest = '{}'
+let ClientChunkManifest = '{}'
+if (process.env.MODE === 'production') {
+  try {
+    ClientChunkManifest = readFileSync(CLIENT_CHUNKHASHES_MANIFESTJSON_FILEPATH, 'utf-8')
+  } catch (ex) {
+    console.warn('Could not parse chunkhashes from manifest.json: ', ex)
+  }
 }
 
 function styleTags(styles) {
   return styles
     .map(style =>
-      `<link href="${style}" media="screen, projection" rel="stylesheet" type="text/css" />`
+      `<link href="${style}" media="screen, projection" rel="stylesheet" />`
     )
     .join('\n')
 }
@@ -26,7 +27,7 @@ function styleTags(styles) {
 function scriptTags(scripts) {
   return scripts
     .map(script =>
-      `<script type="text/javascript" src="${script}"></script>`
+      `<script src="${script}"></script>`
     )
     .join('\n')
 }
@@ -82,7 +83,7 @@ function render(rootReactElement, initialState) {
           (initialState
             ? `window.APP_STATE=${serialize(initialState)};`
             : '')
-          + `window.CHUNK_MANIFEST=${ClientManifest};`
+          + `window.CHUNK_MANIFEST=${ClientChunkManifest};`
         }</script>
 
         ${scripts}
