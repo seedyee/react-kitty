@@ -18,7 +18,7 @@
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "nsp": "nsp check --output summary",
     "test": "cross-env NODE_PATH=src ava",
-    "test:watch": "cross-env NODE_PATH=src ava --watch",
+    "test:watch": "cross-env ava --watch",
     "coverage": "nyc npm run test",
     "watch:test": "npm run test -- --watch",
     "lint": "npm run lint:js",
@@ -63,7 +63,7 @@
     "verbose": true,
     "babel": "inherit",
     "files": [
-      "test/**/*.test.js"
+      "src/**/*.test.js"
     ]
   },
   "dependencies": {
