@@ -1,5 +1,10 @@
 const status = ['REQUEST', 'SUCCESS', 'FAILURE']
-const defaultActionCrator = (type) => (payload, meta = {}) => ({ type, payload, ...meta })
+const defaultActionCrator = (type) => (payload, meta = {}) => {
+  if (typeof payload === 'undefined') {
+    return { type, ...meta }
+  }
+  return { type, payload, ...meta }
+}
 
 const checker = (str) => {
   if (!typeof str === 'string' && str.length > 0) {
