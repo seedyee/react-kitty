@@ -131,6 +131,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
   const ifProdClient = ifElse(isProd && isClient)
   const ifProdServer = ifElse(isProd && isServer)
   const ifIntegration = ifElse(process.env.CI || false)
+  const ifUniversal = ifElse(process.env.DISABLE_SSR)
 
   const projectId = path.basename(root)
 
@@ -305,7 +306,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
     plugins: removeEmpty([
 
       // Create static HTML page. This can be used when server rendering is not interesting.
-      // ifProdClient(new HtmlPlugin()),
+      ifUniversal(null, ifProdClient(new HtmlPlugin())),
 
       // Render Dashboard for Client Development + ProgressBar for production builds
       ifIntegration(null, ifDevClient(new Dashboard())),
@@ -550,6 +551,20 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
             // Enable caching for babel transpiles
             // Babel-Loader specific setting
             cacheDirectory: path.resolve(os.tmpdir(), projectId, "babel-external"),
+
+            // Don't try to find .babelrc because we want to force this configuration.
+            // This is critical for 3rd party as they sometimes deliver `.babelrc`
+            // inside their npm packages (which is wrong BTW, but we can't fix the whole world)
+            babelrc: false,
+
+            // Faster transpiling for minor loose in formatting
+            compact: true,
+
+            // Keep origin information alive
+            sourceMaps: true,
+
+            // Nobody needs the original comments when having source maps
+            comments: false,
 
             env:
             {
