@@ -1,7 +1,12 @@
 extends:
   - airbnb
   - plugin:ava/recommended
-
+settings:
+  import/resolver:
+    node:
+      moduleDirectory:
+        - node_modules
+        - src
 parser: babel-eslint
 env:
   browser: true
