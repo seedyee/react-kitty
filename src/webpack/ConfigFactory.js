@@ -213,15 +213,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
 
     // See also: https://webpack.github.io/docs/configuration.html#devtool
     // and http://webpack.github.io/docs/build-performance.html#sourcemaps
-    //
-    // We want to be able to get nice stack traces when running our server
-    // bundle. To fully support this we'll also need to configure the
-    // `node-source-map-support` module to execute at the start of the server
-    // bundle. This module will allow the node to make use of the
-    // source maps.
-    //
-    // We also want to be able to link to the source in Chrome dev tools
-    devtool: ifProd("cheap-module-source-map", "cheap-module-eval-source-map"),
+    // All 'module*' and 'cheap' variants do not seem to work with this kind
+    // of setup where we have loaders involved. Even simple console messages jump
+    // to the wrong location in these cases.
+    devtool: ifProd("source-map", "eval-source-map"),
 
     // Define our entry chunks for our bundle.
     entry: removeEmptyKeys(
@@ -386,9 +381,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD)
         "process.env.CLIENT_BUNDLE_OUTPUT_PATH": JSON.stringify(process.env.CLIENT_BUNDLE_OUTPUT_PATH),
         "process.env.CLIENT_BUNDLE_ASSETS_FILENAME": JSON.stringify(process.env.CLIENT_BUNDLE_ASSETS_FILENAME),
         "process.env.CLIENT_BUNDLE_HTTP_PATH": JSON.stringify(process.env.CLIENT_BUNDLE_HTTP_PATH),
-        "process.env.CLIENT_BUNDLE_CACHE_MAXAGE": JSON.stringify(process.env.CLIENT_BUNDLE_CACHE_MAXAGE),
-        "process.env.PROXY_SERVER_ROOT": JSON.stringify(process.env.PROXY_SERVER_ROOT),
-        "process.env.PROXY_SERVER_PORT": JSON.stringify(process.env.PROXY_SERVER_PORT)
+        "process.env.CLIENT_BUNDLE_CACHE_MAXAGE": JSON.stringify(process.env.CLIENT_BUNDLE_CACHE_MAXAGE)
       }),
 
       // Generates a JSON file containing a map of all the output files for
