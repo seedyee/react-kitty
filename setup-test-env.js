@@ -17,6 +17,8 @@ global.navigator = window.navigator
 // https://www.npmjs.com/package/mock-css-modules
 var mockCssModules = require("mock-css-modules")
 mockCssModules.register(['.sass', '.scss'])
+// mock alert
+global.alert = function() {}
 
 /* global.mockCssModules = require("mock-css-modules")
  * global.mockCssModules.register(['.sass', '.scss'])*/
