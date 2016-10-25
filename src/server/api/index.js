@@ -13,17 +13,19 @@ router.post('/login', (req, res) => {
     res.json({ error: { text: `${email} doesn't exisit !` } })
   } else if (emailMap[email] !== password) {
     res.json({ error: { text: 'password incorrect' } })
+  } else {
+    res.json({ email })
   }
-  res.json({ email })
 })
 
 router.post('/register', (req, res) => {
   const { email, password } = req.body
   if (emailMap[email]) {
     res.json({ error: { text: `${email} already exisits !` } })
+  } else {
+    emailMap[email] = password
+    res.json({ email })
   }
-  emailMap[email] = password
-  res.json({ email })
 })
 
 router.get('/logout', (req, res) => {
