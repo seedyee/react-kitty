@@ -96,6 +96,9 @@ The application configuration is supported by the `dotenv` module and it require
 
 Starts a development server for both the client and server bundles. We use `react-hot-loader` v3 to power the hot reloading of the client bundle, whilst a filesystem watch is implemented to reload the server bundle when any changes have occurred.
 
+### `npm run start:plain`
+Same as `npm run start` but without dashboard
+
 ### `npm run prod`
 
 Builds the client and server bundles, with the output being production optimized.
