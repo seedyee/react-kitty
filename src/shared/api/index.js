@@ -46,8 +46,8 @@ const request = ({ method, url, data }) => fetch(urlRoot + apiPrefix + url, {
   body: JSON.stringify(data),
 }).then(checkStatus).then(parseJSON)
 
-const post = (url, data) => request({ method: 'POST', url, data })
-const get = (url) => request({ method: 'GET', url })
+export const post = (url, data) => request({ method: 'POST', url, data })
+export const get = (url) => request({ method: 'GET', url })
 
 export const login = (data) => post('/login', data)
 export const register = (data) => post('/register', data)
