@@ -19,6 +19,8 @@ rules:
     - off
   no-console:
     - off
+  new-cap:
+    - off
   semi:
     - off
   react/jsx-filename-extension:
