@@ -29,6 +29,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 - Redux Saga for side effects manage
 - React Router v4  Declarative routing for React.
 - Immutable-js persistent data collections which increase efficiency and simplicity.
+- Ava + Enzyme + sion for testing = ❤
 - *React Helmet* allowing control of the page title/meta/styles/scripts from within your components. Direct control for your SEO needs.
 - CSS Support with CSS modules and additional flexible full PostCSS chain for advanced transformations e.g. autoprefixer
 - Fully integrated asset support for referencing files in CSS and JavaScript.
@@ -39,6 +40,7 @@ This boilerplate contains an absolutely minimal set of dependencies in order to 
 - Support for development and optimized production configuration.
 - Easy environment configuration via `dotenv` files.
 - *Markdown* rendering for Components integrated.
+
 
 ## Work in progress
 
@@ -89,8 +91,6 @@ The application configuration is supported by the `dotenv` module and it require
 |- rollup.script.cfg // Configuration file for bundling scripts into executable
 ```
 
-
-
 ## NPM Commands
 
 ### `npm run start`
@@ -109,7 +109,11 @@ Executes the server. It expects you to have already built the bundles either via
 
 Deletes any build output that would have originated from the other commands.
 
+### `npm run test`
+Run test
 
+### `npm run test:watch`
+Run test in watch mode
 
 ## References
 
