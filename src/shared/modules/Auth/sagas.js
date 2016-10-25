@@ -13,14 +13,18 @@ import * as api from '../../api'
 
 // Users won't get the UI to triggle `LOGOUT` action before them have logined or registered.
 
-function* loginFlow() {
+export function* loginFlow() {
   while (true) {
     const { payload } = yield take(loginActions.REQUEST)
     try {
       const { error, ...rest } = yield call(api.login, payload)
-      if (error) throw new Error(error.text)
-      yield put(loginActions.success(rest))
-      alert('login success !')
+      if (error) {
+        yield put(loginActions.failure(error.text))
+        alert(error.text)
+      } else {
+        yield put(loginActions.success(rest))
+        alert('login success !')
+      }
     } catch (e) {
       yield put(loginActions.failure(e))
       alert(e)
@@ -28,13 +32,16 @@ function* loginFlow() {
   }
 }
 
-function* logoutFlow() {
+export function* logoutFlow() {
   while (true) {
     const { payload } = yield take(logoutActions.REQUEST)
     try {
       const { error, ...rest } = yield call(api.logout, payload)
-      if (error) throw new Error(error.text)
-      yield put(logoutActions.success(rest))
+      if (error) {
+        yield put(logoutActions.failure(error.text))
+      } else {
+        yield put(logoutActions.success(rest))
+      }
     } catch (e) {
       yield put(logoutActions.failure(e))
       alert(e)
@@ -42,14 +49,18 @@ function* logoutFlow() {
   }
 }
 
-function* registerFlow() {
+export function* registerFlow() {
   while (true) {
     const { payload } = yield take(registerActions.REQUEST)
     try {
       const { error, ...rest } = yield call(api.register, payload)
-      if (error) throw new Error(error.text)
-      yield put(registerActions.success(rest))
-      alert('register sucess !')
+      if (error) {
+        yield put(registerActions.failure(error.text))
+        alert(error.text)
+      } else {
+        yield put(registerActions.success(rest))
+        alert('register sucess !')
+      }
     } catch (e) {
       yield put(registerActions.failure(e))
       alert(e)
