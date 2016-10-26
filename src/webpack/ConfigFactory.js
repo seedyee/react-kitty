@@ -1,12 +1,18 @@
-import os from 'os'
 import path from 'path'
-// An array of builtin modules fetched from the running Node.js version
-import builtinModules from 'builtin-modules'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import dotenv from 'dotenv'
+// builtinModules is an array of builtin modules fetched from the running Node.js version
+import builtinModules from 'builtin-modules'
 
-import applyPlugins from './applyPlugins'
-import { ifElse, removeEmpty, removeEmptyKeys, merge, ifIsFile } from './util'
+import {
+  ifElse,
+  ifIsFile,
+  removeEmpty,
+  removeEmptyKeys,
+} from './util'
+
+import createPlugins from './createPlugins'
+import createJsRules from './createJsRules'
+import createCssRules from './createCssRules'
 
 // Using more modern approach of hashing than 'webpack-md5-hash'. Somehow the SHA256 version
 // ('webpack-sha-hash') does not correctly work based (produces different hashes for same content).
@@ -15,8 +21,6 @@ import { ifElse, removeEmpty, removeEmptyKeys, merge, ifIsFile } from './util'
 
 import esModules from './Modules'
 
-import BabelConfigClient from '../config/babel.es'
-import BabelConfigNode from '../config/babel.node'
 
 const builtInSet = new Set(builtinModules)
 
@@ -44,6 +48,9 @@ function isLoaderSpecificFile(request) {
 function ConfigFactory(target, mode) {
   process.env.NODE_ENV = mode
   process.env.BABEL_ENV = mode
+  /* --------------- environment variables ------------------- */
+  /* --------------------------------------------------------- */
+  /* eslint-disable no-unused-vars */
   const root = process.cwd()
   const isDev = mode === 'development'
   const isProd = mode === 'production'
@@ -58,13 +65,45 @@ function ConfigFactory(target, mode) {
   const ifDevServer = ifElse(isDev && isServer) // eslint-disable-line no-unused-vars
   const ifProdClient = ifElse(isProd && isClient)
   const ifProdServer = ifElse(isProd && isServer)
+  /* eslint-enable */
 
-  const projectId = path.basename(root)
-  const isVerbose = true
-
-  return {
+  return ({
     // We need to state that we are targetting 'node' for our server bundle.
     target: ifServer('node', 'web'),
+    // Define our entry chunks for our bundle.
+    entry: removeEmptyKeys({
+      main: removeEmpty([
+        ifDevClient('react-hot-loader/patch'),
+        ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
+        ifIsFile(`./src/${target}/index.js`),
+      ]),
+
+      vendor: ifProdClient(ifIsFile(`./src/${target}/vendor.js`)),
+    }),
+
+    output: {
+      // The dir in which our bundle should be output.
+      path: path.resolve(root, isClient ? process.env.CLIENT_BUNDLE_OUTPUT_PATH : process.env.SERVER_BUNDLE_OUTPUT_PATH),
+      // The filename format for our bundle's entries.
+      filename: ifProdClient('[name]-[chunkhash].js', '[name].js'),
+      chunkFilename: ifProdClient('chunk-[name]-[chunkhash].js', 'chunk-[name].js'),
+
+      // Prefixes every line of the source in the bundle with this string.
+      sourcePrefix: '',
+
+      // This is the web path under which our webpack bundled output should
+      // be considered as being served from.
+      publicPath: ifDev(
+        // As we run a seperate server for our client and server bundles we
+        // need to use an absolute http path for our assets public path.
+        `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}${process.env.CLIENT_BUNDLE_HTTP_PATH}`,
+
+        // Otherwise we expect our bundled output to be served from this path.
+        process.env.CLIENT_BUNDLE_HTTP_PATH
+      ),
+      // When in server mode we will output our bundle as a commonjs2 module.
+      libraryTarget: ifServer('commonjs2', 'var'),
+    },
 
     // We have to set this to be able to use these items when executing a
     // server bundle. Otherwise strangeness happens, like __dirname resolving
@@ -78,13 +117,13 @@ function ConfigFactory(target, mode) {
     stats: {
       colors: true,
       reasons: true,
-      hash: isVerbose,
-      version: isVerbose,
+      hash: true,
+      version: true,
       timings: true,
-      chunks: isVerbose,
-      chunkModules: isVerbose,
-      cached: isVerbose,
-      cachedAssets: isVerbose,
+      chunks: true,
+      chunkModules: true,
+      cached: true,
+      cachedAssets: true,
     },
 
     // This is not the file cache, but the runtime cache.
@@ -130,70 +169,6 @@ function ConfigFactory(target, mode) {
       }),
     ]),
 
-    /* eslint-disable-en curly */
-
-    // See also: https://webpack.github.io/docs/configuration.html#devtool
-    // and http://webpack.github.io/docs/build-performance.html#sourcemaps
-    // All 'module*' and 'cheap' variants do not seem to work with this kind
-    // of setup where we have loaders involved. Even simple console messages jump
-    // to the wrong location in these cases.
-    devtool: ifProd('source-map', 'eval-source-map'),
-
-    // Define our entry chunks for our bundle.
-    entry: removeEmptyKeys({
-      main: removeEmpty([
-        ifDevClient('react-hot-loader/patch'),
-        ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
-        ifIsFile(`./src/${target}/index.js`),
-      ]),
-
-      vendor: ifProdClient(ifIsFile(`./src/${target}/vendor.js`)),
-    }),
-
-    output: {
-      // The dir in which our bundle should be output.
-      path: path.resolve(
-        root,
-        isClient ? process.env.CLIENT_BUNDLE_OUTPUT_PATH : process.env.SERVER_BUNDLE_OUTPUT_PATH
-      ),
-
-      // The filename format for our bundle's entries.
-      filename: ifProdClient(
-        // We include a hash for client caching purposes. Including a unique
-        // has for every build will ensure browsers always fetch our newest
-        // bundle.
-        '[name]-[chunkhash].js',
-
-        // We want a determinable file name when running our server bundles,
-        // as we need to be able to target our server start file from our
-        // npm scripts. We don't care about caching on the server anyway.
-        // We also want our client development builds to have a determinable
-        // name for our hot reloading client bundle server.
-        '[name].js'
-      ),
-      chunkFilename: ifProdClient(
-        'chunk-[name]-[chunkhash].js',
-        'chunk-[name].js'
-      ),
-
-      // Prefixes every line of the source in the bundle with this string.
-      sourcePrefix: '',
-
-      // This is the web path under which our webpack bundled output should
-      // be considered as being served from.
-      publicPath: ifDev(
-        // As we run a seperate server for our client and server bundles we
-        // need to use an absolute http path for our assets public path.
-        `http://localhost:${process.env.CLIENT_DEVSERVER_PORT}${process.env.CLIENT_BUNDLE_HTTP_PATH}`,
-
-        // Otherwise we expect our bundled output to be served from this path.
-        process.env.CLIENT_BUNDLE_HTTP_PATH
-      ),
-
-      // When in server mode we will output our bundle as a commonjs2 module.
-      libraryTarget: ifServer('commonjs2', 'var'),
-    },
-
     resolve: {
       // Enable new module/jsnext:main field for requiring files
       // Defaults: https://webpack.github.io/docs/configuration.html#resolve-packagemains
@@ -206,167 +181,19 @@ function ConfigFactory(target, mode) {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.es5', '.es6', '.es7', '.es', '.json'],
     },
 
-    plugins: applyPlugins(target, mode),
+    plugins: createPlugins(target, mode),
     module: {
-      rules: removeEmpty([
-        {
-          test: /\.json$/,
-          // Before going through our normal loaders, we convert simple JSON files to JS
-          // This is useful for further processing e.g. compression with babili
-          enforce: 'pre',
-          loader: 'json-loader',
-        },
-
-        // Javascript
-        {
-          test: /\.(js|jsx|json)$/,
-          loader: 'babel-loader',
-          exclude: [
-            /node_modules/,
-            path.resolve(root, process.env.CLIENT_BUNDLE_OUTPUT_PATH),
-            path.resolve(root, process.env.SERVER_BUNDLE_OUTPUT_PATH),
-          ],
-          query: merge(
-            {
-              // Enable caching for babel transpiles
-              // Babel-Loader specific setting
-              cacheDirectory: path.resolve(os.tmpdir(), projectId, 'babel-local'),
-
-              env: {
-                production: {
-                  presets: ['babili'],
-                  comments: false,
-                },
-                development: {
-                  plugins: ['react-hot-loader/babel'],
-                },
-              },
-            },
-
-            ifServer(BabelConfigNode),
-            ifClient(BabelConfigClient)
-          ),
-        },
-
-        // External JavaScript
-        ifProdServer({
-          test: /\.(js|json)$/,
-          loader: 'babel-loader',
-          exclude: [path.resolve(root, 'src')],
-          query: {
-            // Enable caching for babel transpiles
-            // Babel-Loader specific setting
-            cacheDirectory: path.resolve(os.tmpdir(), projectId, 'babel-external'),
-
-            // Don't try to find .babelrc because we want to force this configuration.
-            // This is critical for 3rd party as they sometimes deliver `.babelrc`
-            // inside their npm packages (which is wrong BTW, but we can't fix the whole world)
-            babelrc: false,
-
-            // Faster transpiling for minor loose in formatting
-            compact: true,
-
-            // Keep origin information alive
-            sourceMaps: true,
-
-            // Nobody needs the original comments when having source maps
-            comments: false,
-
-            env: {
-              production: {
-                // Adding babili to babel does not remove comments/formatting added by Webpack.
-                // It works on a per-file level which is actually better to cache.
-                // What's needed is some output flag for webpack to omit adding too much cruft
-                // to the output.
-                // To postprocess the result (remove comments/rename webpack vars) one can use
-                // babel --no-comments --plugins minify-mangle-names bundle.js
-                // See also: https://github.com/webpack/webpack/issues/2924
-                presets: ['babili'],
-                comments: false,
-              },
-            },
-          },
-        }),
-
-        // Typescript + Typescript/JSX
-        // https://github.com/s-panferov/awesome-typescript-loader
-        {
-          test: /\.(ts|tsx)$/,
-          loader: 'awesome-typescript-loader',
-        },
-
-        // Font file references etc.
-        {
-          test: /\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|jp2|jpx|jxr|gif|webp|mp4|mp3|ogg|pdf)$/,
-          loader: 'file-loader',
-          query: {
-            name: ifProdClient('file-[hash:base62:8].[ext]', '[name].[ext]'),
-          },
-        },
-
-        // CSS
-        merge({ test: /\.css$/ },
-
-          // When targetting the server we fake out the style loader as the
-          // server can't handle the styles and doesn't care about them either..
-          ifServer({
-            loaders: [
-              {
-                loader: 'css-loader/locals',
-                query: {
-                  sourceMap: false,
-                  modules: true,
-                  localIdentName: ifProd('[local]-[hash:base62:8]', '[path][name]-[local]'),
-                  minimize: false,
-                },
-              },
-              { loader: 'postcss-loader' },
-            ],
-          }),
-
-          // For a production client build we use the ExtractTextPlugin which
-          // will extract our CSS into CSS files. The plugin needs to be
-          // registered within the plugins section too.
-          ifProdClient({
-            loader: ExtractTextPlugin.extract({
-              fallbackLoader: 'style-loader',
-              loader: [
-                {
-                  loader: 'css-loader',
-                  query: {
-                    modules: true,
-                    sourceMap: true,
-                    localIdentName: '[local]-[hash:base62:8]',
-                  },
-                },
-                { loader: 'postcss-loader' },
-              ],
-            }),
-          }),
-          // For a development client we will use a straight style & css loader
-          // along with source maps. This combo gives us a better development
-          // experience.
-          ifDevClient({
-            loaders: [
-              { loader: 'style-loader' },
-              {
-                loader: 'css-loader',
-                query: {
-                  sourceMap: true,
-                  modules: true,
-                  localIdentName: '[path][name]-[local]',
-                  minimize: false,
-                  import: false,
-                },
-              },
-              { loader: 'postcss-loader' },
-            ],
-          })
-
-        ),
-      ]),
+      rules: removeEmpty([...createJsRules(target, mode), ...createCssRules(target, mode)]),
     },
-  }
+
+    // See also: https://webpack.github.io/docs/configuration.html#devtool
+    // and http://webpack.github.io/docs/build-performance.html#sourcemaps
+    // All 'module*' and 'cheap' variants do not seem to work with this kind
+    // of setup where we have loaders involved. Even simple console messages jump
+    // to the wrong location in these cases.
+    devtool: ifProd('source-map', 'eval-source-map'),
+  }) // ----------------------------------------------------------------- return ends
 }
 
 export default ConfigFactory
+

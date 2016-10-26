@@ -15,7 +15,7 @@ import getPostCSSConfig from './PostCSSConfig'
 
 import { removeEmpty, ifElse } from './util'
 
-const applyPlugins = (target, mode) => {
+const createPlugins = (target, mode) => {
   const ifIntegration = ifElse(process.env.CI || false)
   const ifUniversal = ifElse(process.env.DISABLE_SSR)
   const root = process.cwd()
@@ -31,7 +31,6 @@ const applyPlugins = (target, mode) => {
   const ifDevClient = ifElse(isDev && isClient)
   const ifDevServer = ifElse(isDev && isServer) // eslint-disable-line no-unused-vars
   const ifProdClient = ifElse(isProd && isClient)
-  const ifProdServer = ifElse(isProd && isServer)
 
   return removeEmpty([
 
@@ -221,4 +220,4 @@ const applyPlugins = (target, mode) => {
   ])
 }
 
-export default applyPlugins
+export default createPlugins
