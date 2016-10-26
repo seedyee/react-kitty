@@ -1,9 +1,9 @@
-import express from "express"
-import createWebpackHotMiddleware from "webpack-hot-middleware"
-import createWebpackMiddleware from "webpack-dev-middleware"
+import express from 'express'
+import createWebpackHotMiddleware from 'webpack-hot-middleware'
+import createWebpackMiddleware from 'webpack-dev-middleware'
 
-import ListenerManager from "./ListenerManager"
-import { createNotification } from "./util"
+import ListenerManager from './ListenerManager'
+import { createNotification } from './util'
 
 class HotClient {
   constructor(compiler) {
@@ -11,18 +11,16 @@ class HotClient {
     this.webpackDevMiddleware = createWebpackMiddleware(compiler, {
       noInfo: true,
       headers: {
-        "Access-Control-Allow-Origin": "*",
+        'Access-Control-Allow-Origin': '*',
       },
 
       // The path at which the client bundles are served from.  Note: in this
       // case as we are running a seperate dev server the public path should
-      // be absolute, i.e. including the "http://..."
+      // be absolute, i.e. including the 'http://...'
       publicPath: compiler.options.output.publicPath,
 
       // Make it beautiful
-      stats: {
-        colors: true
-      }
+      stats: { colors: true },
     })
     app.use(this.webpackDevMiddleware)
     app.use(createWebpackHotMiddleware(compiler))
@@ -31,17 +29,14 @@ class HotClient {
     this.listenerManager = new ListenerManager(listener)
 
     createNotification({
-      title: "Hot Client",
-      message: "Running",
+      title: 'Hot Client',
+      message: 'Running',
     })
   }
 
   dispose(force = false) {
     this.webpackDevMiddleware.close()
-
-    return this.listenerManager
-      ? this.listenerManager.dispose(force)
-      : Promise.resolve()
+    return this.listenerManager ? this.listenerManager.dispose(force) : Promise.resolve()
   }
 }
 

@@ -1,19 +1,18 @@
-import path from "path"
-import process from "process"
-import webpack from "webpack"
-import chokidar from "chokidar"
+/* eslint-disable no-underscore-dangle */
+import path from 'path'
+import process from 'process'
+import webpack from 'webpack'
+import chokidar from 'chokidar'
 
-import HotClient from "./HotClient"
-import HotServer from "./HotServer"
-import ConfigFactory from "./ConfigFactory"
-import { createNotification } from "./util"
+import HotClient from './HotClient'
+import HotServer from './HotServer'
+import ConfigFactory from './ConfigFactory'
+import { createNotification } from './util'
 
 const CWD = process.cwd()
 
-class HotServers
-{
-  constructor(root = CWD)
-  {
+class HotServers {
+  constructor(root = CWD) {
     this.root = root
 
     // Bind our functions to avoid any scope/closure issues.
@@ -28,26 +27,21 @@ class HotServers
     this.serverBundle = null
     this.serverCompiler = null
 
-    const configPath = path.resolve(__dirname, "ConfigFactory.js")
-
     // If we receive a kill cmd then we will first try to dispose our listeners.
-    process.on("SIGTERM", () => this.dispose().then(() => process.exit(0)))
+    process.on('SIGTERM', () => this.dispose().then(() => process.exit(0)))
   }
 
-  start()
-  {
-    try
-    {
-      console.log("Compiling client...")
-      this.clientCompiler = webpack(ConfigFactory("client", "development"))
+  start() {
+    try {
+      console.log('Compiling client...')
+      this.clientCompiler = webpack(ConfigFactory('client', 'development'))
 
-      console.log("Compiling server...")
-      this.serverCompiler = webpack(ConfigFactory("server", "development"))
-    }
-    catch (err) {
+      console.log('Compiling server...')
+      this.serverCompiler = webpack(ConfigFactory('server', 'development'))
+    } catch (err) {
       createNotification({
-        title: "Webpack",
-        message: "Config invalid, check console for error",
+        title: 'Webpack',
+        message: 'Config invalid, check console for error',
       })
       console.error(err)
       return
@@ -58,8 +52,7 @@ class HotServers
   }
 
 
-  dispose()
-  {
+  dispose() {
     // We want to forcefully close our servers (passing true) which will hard
     // kill any existing connections.  We don't care about them running as we
     // need to restart both the client and server bundles.
@@ -74,7 +67,7 @@ class HotServers
   restart() {
     const clearWebpackConfigsCache = () => {
       Object.keys(require.cache).forEach((modulePath) => {
-        if (~modulePath.indexOf("webpack")) {
+        if (modulePath.indexOf('webpack') !== -1) { // eslint-disable-line no-bitwise
           delete require.cache[modulePath]
         }
       })
@@ -87,17 +80,17 @@ class HotServers
   }
 
   _configureHotClient() {
-    this.clientCompiler.plugin("done", (stats) => {
+    this.clientCompiler.plugin('done', (stats) => {
       if (stats.hasErrors()) {
         createNotification({
-          title: "Client",
-          message: "Build failed, check console for error",
+          title: 'Client',
+          message: 'Build failed, check console for error',
         })
         console.log(stats.toString())
       } else {
         createNotification({
-          title: "Client",
-          message: "Built",
+          title: 'Client',
+          message: 'Built',
         })
       }
     })
@@ -107,7 +100,7 @@ class HotServers
 
   _configureHotServer() {
     const compileHotServer = () => {
-      console.log("compiling hot server")
+      console.log('compiling hot server')
       const runCompiler = () => this.serverCompiler.run(() => undefined)
 
       // Shut down any existing running server if necessary before starting the
@@ -119,30 +112,30 @@ class HotServers
       }
     }
 
-    this.clientCompiler.plugin("done", (stats) => {
+    this.clientCompiler.plugin('done', (stats) => {
       if (!stats.hasErrors()) {
         compileHotServer()
       }
     })
 
-    this.serverCompiler.plugin("done", (stats) => {
+    this.serverCompiler.plugin('done', (stats) => {
       if (stats.hasErrors()) {
         createNotification({
-          title: "Server",
-          message: "Build failed, check console for error",
+          title: 'Server',
+          message: 'Build failed, check console for error',
         })
         console.log(stats.toString())
         return
       }
 
       createNotification({
-        title: "Server",
-        message: "Built",
+        title: 'Server',
+        message: 'Built',
       })
 
       // Make sure our newly built server bundles aren't in the module cache.
       Object.keys(require.cache).forEach((modulePath) => {
-        if (~modulePath.indexOf(this.serverCompiler.options.output.path)) {
+        if (modulePath.indexOf(this.serverCompiler.options.output.path) !== -1) {
           delete require.cache[modulePath]
         }
       })
@@ -152,14 +145,14 @@ class HotServers
 
     // Now we will configure `chokidar` to watch our server specific source folder.
     // Any changes will cause a rebuild of the server bundle.
-    this.watcher = chokidar.watch([ path.resolve(this.root, "./src/server") ])
-    this.watcher.on("ready", () => {
+    this.watcher = chokidar.watch([path.resolve(this.root, './src/server')])
+    this.watcher.on('ready', () => {
       this.watcher
-        .on("add", compileHotServer)
-        .on("addDir", compileHotServer)
-        .on("change", compileHotServer)
-        .on("unlink", compileHotServer)
-        .on("unlinkDir", compileHotServer)
+        .on('add', compileHotServer)
+        .on('addDir', compileHotServer)
+        .on('change', compileHotServer)
+        .on('unlink', compileHotServer)
+        .on('unlinkDir', compileHotServer)
     })
   }
 }

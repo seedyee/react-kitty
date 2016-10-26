@@ -1,7 +1,6 @@
-import notifier from "node-notifier"
+import notifier from 'node-notifier'
 
-function createNotification(options = {})
-{
+function createNotification(options = {}) {
   notifier.notify({
     title: options.title,
     message: options.message,
@@ -12,5 +11,5 @@ function createNotification(options = {})
 }
 
 export {
-  createNotification
+  createNotification,
 }

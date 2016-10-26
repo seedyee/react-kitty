@@ -1,7 +1,7 @@
-import path from "path"
+import path from 'path'
 
-import ListenerManager from "./ListenerManager"
-import { createNotification } from "./util"
+import ListenerManager from './ListenerManager'
+import { createNotification } from './util'
 
 class HotServer {
   constructor(compiler) {
@@ -12,34 +12,29 @@ class HotServer {
       compiler.options.output.path, `${Object.keys(compiler.options.entry)[0]}.js`
     )
 
-    try
-    {
+    try {
       // The server bundle  will automatically start the web server just by
       // requiring it. It returns the http listener too.
-      this.listenerManager = new ListenerManager(require(compiledOutputPath).default)
+      this.listenerManager = new ListenerManager(require(compiledOutputPath).default) // eslint-disable-line
 
       const url = `http://localhost:${process.env.SERVER_PORT}`
 
       createNotification({
-        title: "Server",
+        title: 'Server',
         message: `Running on ${url}`,
         open: url,
       })
-    }
-    catch (err)
-    {
+    } catch (err) {
       createNotification({
-        title: "Server",
-        message: "Error: Bundle invalid, check console for error",
+        title: 'Server',
+        message: 'Error: Bundle invalid, check console for error',
       })
       console.error(err)
     }
   }
 
   dispose(force = false) {
-    return this.listenerManager
-      ? this.listenerManager.dispose(force)
-      : Promise.resolve()
+    return this.listenerManager ? this.listenerManager.dispose(force) : Promise.resolve()
   }
 }
 

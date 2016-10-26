@@ -39,7 +39,6 @@ const builtInSet = new Set(builtinModules)
 // - 'iltorb' brotli compression wrapper for NodeJS
 // - 'node-zopfli' native Zopfli implementation
 const problematicCommonJS = new Set(['helmet', 'express', 'commonmark', 'encoding', 'node-pre-gyp', 'iltorb', 'node-zopfli'])
-const CWD = process.cwd()
 
 // @see https://github.com/motdotla/dotenv
 dotenv.config()
@@ -81,12 +80,18 @@ function ifIsFile(filePath) {
     return fs.statSync(filePath).isFile() ? filePath : ''
   } catch (ex) {
     /* console.log(ex)*/
+    console.log(`todo ${filePath}`)
   }
   return ''
 }
 
 const isDebug = true
 const isVerbose = true
+
+const CWD = process.cwd()
+/* ---------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------- */
 
 function ConfigFactory(target, mode, options = {}, root = CWD) {
   // Output custom options
@@ -423,7 +428,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD) {
           // Pass options for PostCSS
           options: {
             postcss: getPostCSSConfig(webpack, {}),
-            context: CWD,
+            context: root,
           },
         })
       ),
@@ -442,7 +447,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD) {
           // Pass options for PostCSS
           options: {
             postcss: getPostCSSConfig(webpack, {}),
-            context: CWD,
+            context: root,
           },
         })
       ),
@@ -635,6 +640,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD) {
               { loader: 'postcss-loader' },
             ],
           })
+
         ),
       ]),
     },
