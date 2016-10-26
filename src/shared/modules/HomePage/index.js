@@ -15,7 +15,7 @@ This is a paragraph rendered using Markdown.
 * Third Argument
 `
 
-function Home({ users }) {
+export function Home({ users }) {
   return (
     <div className={Styles.Home}>
       <Helmet title="Home" />
