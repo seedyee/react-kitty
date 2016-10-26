@@ -29,11 +29,11 @@ function renderApp() {
 // The following is needed so that we can support hot reloading our application.
 if (IS_HOT_DEVELOPMENT) {
   // Accept changes to this file for hot reloading.
-  module.hot.accept('./index.js')
+  module.hot.accept('./index.js', () => renderApp())
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept(
     '../shared/modules/App',
-    () => renderApp(require('../shared/modules/App').default) // eslint-disable-line
+    () => renderApp()
   )
 }
 
