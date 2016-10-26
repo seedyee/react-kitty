@@ -3,6 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import webpack from 'webpack'
 import AssetsPlugin from 'assets-webpack-plugin'
+// An array of builtin modules fetched from the running Node.js version
 import builtinModules from 'builtin-modules'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin'
@@ -10,7 +11,6 @@ import Dashboard from 'webpack-dashboard/plugin'
 import ProgressBar from 'progress-bar-webpack-plugin'
 import HtmlPlugin from 'html-webpack-plugin'
 import dotenv from 'dotenv'
-
 // Using more modern approach of hashing than 'webpack-md5-hash'. Somehow the SHA256 version
 // ('webpack-sha-hash') does not correctly work based (produces different hashes for same content).
 // This is basically a replacement of md5 with the loader-utils implementation which also supports
@@ -43,6 +43,10 @@ const problematicCommonJS = new Set(['helmet', 'express', 'commonmark', 'encodin
 // @see https://github.com/motdotla/dotenv
 dotenv.config()
 
+function ifElse(condition) {
+  return (then, otherwise) => (condition ? then : otherwise)
+}
+
 function removeEmpty(array) {
   return array.filter((entry) => !!entry)
 }
@@ -56,10 +60,6 @@ function removeEmptyKeys(obj) {
   }
 
   return copy
-}
-
-function ifElse(condition) {
-  return (then, otherwise) => (condition ? then : otherwise)
 }
 
 function merge() {
@@ -80,7 +80,6 @@ function ifIsFile(filePath) {
     return fs.statSync(filePath).isFile() ? filePath : ''
   } catch (ex) {
     /* console.log(ex)*/
-    console.log(`todo ${filePath}`)
   }
   return ''
 }
@@ -93,12 +92,7 @@ const CWD = process.cwd()
 /* ---------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------- */
 
-function ConfigFactory(target, mode, options = {}, root = CWD) {
-  // Output custom options
-  if (Object.keys(options).length > 0) {
-    console.log('Using options: ', options)
-  }
-
+function ConfigFactory(target, mode, root = CWD) {
   if (!target || !~['client', 'server'].findIndex((valid) => target === valid)) { // eslint-disable-line
     throw new Error(
       'You must provide a "target" (client|server) to the ConfigFactory.'
@@ -111,7 +105,7 @@ function ConfigFactory(target, mode, options = {}, root = CWD) {
     )
   }
 
-  process.env.NODE_ENV = options.debug ? 'development' : mode
+  process.env.NODE_ENV = mode
   process.env.BABEL_ENV = mode
 
   const isDev = mode === 'development'
@@ -133,14 +127,6 @@ function ConfigFactory(target, mode, options = {}, root = CWD) {
   const ifUniversal = ifElse(process.env.DISABLE_SSR)
 
   const projectId = path.basename(root)
-
-  // Just bundle the server files which are from the local project instead
-  // of a deep self-contained bundle.
-  // See also: https://nolanlawson.com/2016/08/15/the-cost-of-small-modules/
-  const useLightServerBundle = options.lightBundle == null ? isDev : options.lightBundle
-  if (useLightServerBundle && isServer) {
-    console.log('Using light server bundle')
-  }
 
   return {
     // We need to state that we are targetting 'node' for our server bundle.
@@ -206,13 +192,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD) {
           return callback()
 
         // In all other cases follow the user given preference
-        if (useLightServerBundle) {
-          callback(null, `commonjs ${request}`)
-        } else {
-          callback()
-        }
+        return callback(null, `commonjs ${request}`)
       }),
     ]),
+
     /* eslint-disable-en curly */
 
     // See also: https://webpack.github.io/docs/configuration.html#devtool
@@ -227,10 +210,10 @@ function ConfigFactory(target, mode, options = {}, root = CWD) {
       main: removeEmpty([
         ifDevClient('react-hot-loader/patch'),
         ifDevClient(`webpack-hot-middleware/client?reload=true&path=http://localhost:${process.env.CLIENT_DEVSERVER_PORT}/__webpack_hmr`),
-        options.entry ? options.entry : ifIsFile(`./src/${target}/index.js`),
+        ifIsFile(`./src/${target}/index.js`),
       ]),
 
-      vendor: ifProdClient(options.vendor ? options.vendor : ifIsFile(`./src/${target}/vendor.js`)),
+      vendor: ifProdClient(ifIsFile(`./src/${target}/vendor.js`)),
     }),
 
     output:
