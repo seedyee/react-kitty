@@ -12,6 +12,9 @@ export default {
   comments: false,
 
   presets: [
+    //  Can't enable es2015, why ?
+    // 'babel-preset-es2015',
+
     // exponentiation
     'babel-preset-es2016',
 

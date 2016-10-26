@@ -272,17 +272,7 @@ function ConfigFactory(target, mode, root = CWD) {
       ),
 
       // These extensions are tried when resolving a file.
-      extensions: [
-        '.js',
-        '.jsx',
-        '.ts',
-        '.tsx',
-        '.es5',
-        '.es6',
-        '.es7',
-        '.es',
-        '.json',
-      ],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.es5', '.es6', '.es7', '.es', '.json'],
     },
 
     plugins: removeEmpty([
@@ -537,8 +527,7 @@ function ConfigFactory(target, mode, root = CWD) {
             // Nobody needs the original comments when having source maps
             comments: false,
 
-            env:
-            {
+            env: {
               production: {
                 // Adding babili to babel does not remove comments/formatting added by Webpack.
                 // It works on a per-file level which is actually better to cache.
