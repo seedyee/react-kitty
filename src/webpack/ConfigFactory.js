@@ -93,18 +93,6 @@ const CWD = process.cwd()
 /* ---------------------------------------------------------------------- */
 
 function ConfigFactory(target, mode, root = CWD) {
-  if (!target || !~['client', 'server'].findIndex((valid) => target === valid)) { // eslint-disable-line
-    throw new Error(
-      'You must provide a "target" (client|server) to the ConfigFactory.'
-    )
-  }
-
-  if (!mode || !~['development', 'production'].findIndex((valid) => mode === valid)) { // eslint-disable-line
-    throw new Error(
-      'You must provide a "mode" (development|production) to the ConfigFactory.'
-    )
-  }
-
   process.env.NODE_ENV = mode
   process.env.BABEL_ENV = mode
 
