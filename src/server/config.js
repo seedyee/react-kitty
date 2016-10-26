@@ -4,7 +4,14 @@
 // These config values then become a part of the server bundle.
 
 import path from 'path'
-import { fileExists } from './guards'
+
+import fs from 'fs'
+
+function fileExists(filePath, message) {
+  if (!fs.existsSync(filePath)) {
+    throw new Error(message)
+  }
+}
 
 const root = process.env.APP_ROOT
 

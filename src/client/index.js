@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import configureStore from '../shared/configStore'
 import App from '../shared/modules/App'
-import { IS_HOT_DEVELOPMENT } from '../common/config'
 
 const container = document.querySelector('#app')
 const initialState = window.APP_STATE || {} // eslint-disable-line
@@ -27,7 +26,7 @@ function renderApp() {
 }
 
 // The following is needed so that we can support hot reloading our application.
-if (IS_HOT_DEVELOPMENT) {
+if (process.env.NODE_ENV === 'development' && module.hot) {
   // Accept changes to this file for hot reloading.
   module.hot.accept('./index.js', () => renderApp())
   // Any changes to our App will cause a hotload re-render.

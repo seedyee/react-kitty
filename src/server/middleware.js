@@ -5,7 +5,6 @@ import { ServerRouter, createServerRenderContext } from 'react-router'
 
 import render from './render'
 import { DISABLE_SSR } from './config'
-import { IS_DEVELOPMENT } from '../common/config'
 import configureStore from '../shared/configStore'
 import { rootSaga } from '../shared/rootSaga'
 import App from '../shared/modules/App/index'
@@ -16,13 +15,14 @@ import App from '../shared/modules/App/index'
 export default function universalMiddleware(req, res) {
   /* eslint-disable no-magic-numbers */
   if (DISABLE_SSR) {
-    if (IS_DEVELOPMENT) {
-      console.log('Handling react route without SSR')  // eslint-disable-line no-console
-    }
     // SSR is disabled so we will just return an empty html page and will
     // rely on the client to populate the initial react application state.
-    const html = render()
-    res.status(200).send(html)
+    try {
+      const html = render()
+      res.status(200).send(html)
+    } catch (ex) {
+      res.status(500).send(`Error during rendering: ${ex}!`)
+    }
     return
   }
 
