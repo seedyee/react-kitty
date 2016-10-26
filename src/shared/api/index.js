@@ -12,11 +12,10 @@ import fetch from 'isomorphic-fetch'
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
     return response
-  } else { // eslint-disable-line no-else-return
-    const error = new Error(response.statusText)
-    error.response = response
-    throw error
   }
+  const error = new Error(response.statusText)
+  error.response = response
+  throw error
 }
 
 const parseJSON = (response) => {
