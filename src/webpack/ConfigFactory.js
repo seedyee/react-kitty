@@ -594,16 +594,21 @@ function ConfigFactory(target, mode, root = CWD) {
           // will extract our CSS into CSS files. The plugin needs to be
           // registered within the plugins section too.
           ifProdClient({
-            // First: the loader(s) that should be used when the css is not extracted
-            // Second: the loader(s) that should be used for converting the resource to a css exporting module
-            // Note: Unfortunately it seems like it does not support the new query syntax of webpack v2
-            // See also: https://github.com/webpack/extract-text-webpack-plugin/issues/196
             loader: ExtractTextPlugin.extract({
               fallbackLoader: 'style-loader',
-              loader: 'css-loader?modules&sourceMap&localIdentName=[local]-[hash:base62:8]!postcss-loader',
+              loader: [
+                {
+                  loader: 'css-loader',
+                  query: {
+                    modules: true,
+                    sourceMap: true,
+                    localIdentName: '[local]-[hash:base62:8]',
+                  },
+                },
+                { loader: 'postcss-loader' },
+              ],
             }),
           }),
-
           // For a development client we will use a straight style & css loader
           // along with source maps. This combo gives us a better development
           // experience.
