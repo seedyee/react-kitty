@@ -19,6 +19,8 @@ rules:
     - off
   no-console:
     - off
+  func-names:
+    - off
   new-cap:
     - off
   semi:
