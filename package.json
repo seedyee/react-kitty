@@ -9,16 +9,16 @@
     "node": ">=6.0.0"
   },
   "bin": {
-    "advanced-script": "./bin/advanced-script.js"
+    "kitty-script": "./bin/kitty-script.js"
   },
   "scripts": {
-    "start": "npm run prescript && webpack-dashboard -- node bin/advanced-script.js start",
-    "prod": "npm run prescript && node bin/advanced-script.js build",
+    "start": "npm run prescript && webpack-dashboard -- node bin/kitty-script.js start",
+    "prod": "npm run prescript && node bin/kitty-script.js build",
     "prod:start": "npm run prod && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "nsp": "nsp check --output summary",
     "test": "cross-env NODE_PATH=src ava",
-    "start:plain": "npm run prescript && node bin/advanced-script.js start",
+    "start:plain": "npm run prescript && node bin/kitty-script.js start",
     "test:watch": "cross-env ava --watch",
     "coverage": "nyc npm run test",
     "watch:test": "npm run test -- --watch",
