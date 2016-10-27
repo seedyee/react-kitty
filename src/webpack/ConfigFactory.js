@@ -13,6 +13,7 @@ import {
 import createPlugins from './createPlugins'
 import createJsRules from './createJsRules'
 import createCssRules from './createCssRules'
+import createOtherRules from './createOtherRules'
 
 // Using more modern approach of hashing than 'webpack-md5-hash'. Somehow the SHA256 version
 // ('webpack-sha-hash') does not correctly work based (produces different hashes for same content).
@@ -181,8 +182,8 @@ function ConfigFactory(target, mode) {
     module: {
       rules: removeEmpty([
         ...createJsRules(target, mode),
-        ...createCssRules(target, mode)]
-      ),
+        ...createOtherRules(target, mode),
+        ...createCssRules(target, mode)]),
     },
 
     // See also: https://webpack.github.io/docs/configuration.html#devtool
