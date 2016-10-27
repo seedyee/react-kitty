@@ -1,5 +1,5 @@
-import build from './scripts/build'
-import start from './scripts/start'
+import build from './src/scripts/build'
+import start from './src/scripts/start'
 
 const script = process.argv[2]
 const args = process.argv.slice(3)
