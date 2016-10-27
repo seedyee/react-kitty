@@ -196,7 +196,6 @@
     "webpack-dashboard": "^0.2.0",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.0",
-    "webpack-node-externals": "^1.5.4",
     "webpack-sources": "^0.1.2"
   },
   "devDependencies": {
@@ -204,6 +203,7 @@
     "normalize.css": "^5.0.0",
     "nsp": "^2.6.2",
     "prepublish-lib": "^0.5.1",
+    "rollup": "0.36.3",
     "source-sans-pro": "^2.0.10"
   }
 }
