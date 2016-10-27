@@ -41,10 +41,6 @@ function isLoaderSpecificFile(request) {
   return Boolean(/\.(eot|woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|webm|ico|mp4|mp3|ogg|pdf|swf|css|scss|sass|sss|less)$/.exec(request))
 }
 
-/* ---------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------- */
-
 function ConfigFactory(target, mode) {
   process.env.NODE_ENV = mode
   process.env.BABEL_ENV = mode
@@ -62,7 +58,7 @@ function ConfigFactory(target, mode) {
   const ifClient = ifElse(isClient)
   const ifServer = ifElse(isServer)
   const ifDevClient = ifElse(isDev && isClient)
-  const ifDevServer = ifElse(isDev && isServer) // eslint-disable-line no-unused-vars
+  const ifDevServer = ifElse(isDev && isServer)
   const ifProdClient = ifElse(isProd && isClient)
   const ifProdServer = ifElse(isProd && isServer)
   /* eslint-enable */
@@ -183,7 +179,10 @@ function ConfigFactory(target, mode) {
 
     plugins: createPlugins(target, mode),
     module: {
-      rules: removeEmpty([...createJsRules(target, mode), ...createCssRules(target, mode)]),
+      rules: removeEmpty([
+        ...createJsRules(target, mode),
+        ...createCssRules(target, mode)]
+      ),
     },
 
     // See also: https://webpack.github.io/docs/configuration.html#devtool
