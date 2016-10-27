@@ -13,8 +13,8 @@
   },
   "scripts": {
     "start": "npm run prescript && webpack-dashboard -- node bin/kitty-script.js start",
-    "prod": "npm run prescript && node bin/kitty-script.js build",
-    "prod:start": "npm run prod && node build/server/main.js",
+    "just-build": "npm run prescript && node bin/kitty-script.js build",
+    "build": "npm run just-build && node build/server/main.js",
     "clean": "rimraf build/client/* build/server/* lib/* bin/*",
     "nsp": "nsp check --output summary",
     "test": "cross-env NODE_PATH=src ava",

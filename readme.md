@@ -101,13 +101,13 @@ Starts a development server for both the client and server bundles. We use `reac
 ### `npm run start:plain`
 Same as `npm run start` but without dashboard
 
-### `npm run prod`
+### `npm run build`
+
+Builds the client and server bundles, with the output being production optimized and then start the server.
+
+### `npm run just-build`
 
 Builds the client and server bundles, with the output being production optimized.
-
-### `npm run prod:start`
-
-Executes the server. It expects you to have already built the bundles either via the `npm run build` command or manually.
 
 ### `npm run clean`
 
@@ -119,11 +119,19 @@ Run test
 ### `npm run test:watch`
 Run test in watch mode
 
+### `npm run coverage`
+
+Test coverage reporting
+
 ## References
 
   - __Webpack 2__ - https://gist.github.com/sokra/27b24881210b56bbaff7
   - __React Hot Loader v3__ - https://github.com/gaearon/react-hot-boilerplate/pull/61
   - __dotenv__ - https://github.com/bkeepers/dotenv
-
+  - __React Router v4__ - https://github.com/ReactTraining/react-router/tree/v4
+  - __Redux Saga__ - https://github.com/yelouafi/redux-saga
+  - __ava__ - https://github.com/avajs/ava
+  - __Sinon__ - http://sinonjs.org/docs/
+  - __Enzyme__ - http://airbnb.io/enzyme/docs/api/ShallowWrapper/findWhere.html
 
 ## [License](license)
