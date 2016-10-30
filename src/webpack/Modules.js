@@ -7,8 +7,14 @@ const modules = new Set()
 
 const nodePackages = readdirSync(root).filter((dirname) => dirname.charAt(0) !== '.')
 
+let json
 nodePackages.forEach((pkg) => {
-  const json = readJsonSync(resolve(root, pkg, 'package.json'))
+  try {
+    json = readJsonSync(resolve(root, pkg, 'package.json'))
+  } catch (ex) {
+    console.log(ex)
+    return
+  }
   if (json.module || json.style || json['jsnext:main']) {
     modules.add(pkg)
   }
