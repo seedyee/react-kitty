@@ -15,7 +15,6 @@ const createJsRules = (target, mode) => {
   const ifClient = ifElse(isClient)
   const ifServer = ifElse(isServer)
   const ifDevServer = ifElse(isDev && isServer) // eslint-disable-line no-unused-vars
-  const ifProdClient = ifElse(isProd && isClient)
   const ifProdServer = ifElse(isProd && isServer)
   const projectId = path.basename(root)
 
