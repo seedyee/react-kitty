@@ -24,15 +24,17 @@ export default function generateServer() {
 
   // Content Security Policy
   app.use(helmet.contentSecurityPolicy({
-    defaultSrc: ['"self"'],
-    scriptSrc: ['"self"'],
-    styleSrc: ['"self"'],
-    imgSrc: ['"self"'],
-    connectSrc: ['"self"', 'ws:'],
-    fontSrc: ['"self"'],
-    objectSrc: ['"none"'],
-    mediaSrc: ['"none"'],
-    frameSrc: ['"none"'],
+    directives: {
+      defaultSrc: ['"self"'],
+      scriptSrc: ['"self"'],
+      styleSrc: ['"self"'],
+      imgSrc: ['"self"'],
+      connectSrc: ['"self"', 'ws:'],
+      fontSrc: ['"self"'],
+      objectSrc: ['"none"'],
+      mediaSrc: ['"none"'],
+      frameSrc: ['"none"'],
+    },
   }))
 
   app.use(helmet.xssFilter())
