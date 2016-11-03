@@ -70,7 +70,6 @@ function render(rootReactElement, initialState) {
         <meta httpEquiv='Content-Language' content='en' />
 
         ${helmet ? helmet.title.toString() : ''}
-        ${helmet ? helmet.meta.toString() : ''}
         ${helmet ? helmet.link.toString() : ''}
 
         ${styles}

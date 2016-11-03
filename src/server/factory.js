@@ -3,7 +3,6 @@ import express from 'express'
 import compression from 'compression'
 import shrinkRay from 'shrink-ray'
 import hpp from 'hpp'
-import helmet from 'helmet'
 
 import {
   CLIENT_BUNDLE_HTTP_PATH,
@@ -21,29 +20,6 @@ export default function generateServer() {
 
   // Prevent HTTP Parameter pollution.
   app.use(hpp())
-
-  // Content Security Policy
-  app.use(helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ['"self"'],
-      scriptSrc: ['"self"'],
-      styleSrc: ['"self"'],
-      imgSrc: ['"self"'],
-      connectSrc: ['"self"', 'ws:'],
-      fontSrc: ['"self"'],
-      objectSrc: ['"none"'],
-      mediaSrc: ['"none"'],
-      frameSrc: ['"none"'],
-    },
-  }))
-
-  app.use(helmet.xssFilter())
-  app.use(helmet.frameguard('deny'))
-  app.use(helmet.ieNoOpen())
-  app.use(helmet.noSniff())
-
-  // Response compression (plain and fast gzip)
-  app.use(compression())
 
   // Advanced response compression using a async zopfli/brotli combination
   // https://github.com/aickin/shrink-ray
