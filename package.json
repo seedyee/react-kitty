@@ -87,6 +87,7 @@
     "redux-form-saga": "0.0.8",
     "redux-immutable": "3.0.8",
     "redux-saga": "0.12.1",
+    "reselect": "^2.5.4",
     "source-sans-pro": "^2.0.10"
   },
   "devDependencies": {
